@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found | gn-science</title>
+    <link rel="canonical" href="https:/gn-science.github.io/">
+    <meta name="theme-color" content="#14161d">
+
+    <meta name="title" content="gn-sceince">
+    <meta name="description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
+    <meta name="keywords" content="education, science, physics, chemistry">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" sizes="128x128" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="gn-sceince">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gn-sciencex.github.io/">
+    <meta property="og:title" content="gn-science">
+    <meta property="og:description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
+    <meta property="og:image" content="https://gn-sciencex.github.io/preview.png">
+    <meta property="og:site_name" content="gn-sceince">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://gn-sciencex.github.io/">
+    <meta name="twitter:title" content="gn-sceince">
+    <meta name="twitter:description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
+    <meta name="twitter:image" content="https://gn-sciencex.github.io/preview.png">
+
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --surface-color: #14161d;
+            --text-main: #e3e6eb;
+            --text-muted: #8a8d91;
+            --primary: #2f80ed;
+            --primary-hover: #569aff;
+            --border: #232731;
+            --radius-sm: 4px;
+            --transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: -2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            z-index: 2;
+            text-align: center;
+            background-color: rgba(20, 22, 29, 0.85);
+            padding: 3rem 2.5rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+            max-width: 90%;
+            width: 440px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="error-container">
+        <h2>404</h2>
+        <p>The page you are looking for does not exist.</p>
+
+        <a href="/" class="btn-primary">
+            Return to main page
+        </a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const MAX_PARTICLES = 45;
+        const MAX_DISTANCE = 110;
+
+        const COLORS = ['#2f80ed', '#569aff', '#8a8d91', '#14161d'];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particlesArray = [];
+
+            for (let i = 0; i < MAX_PARTICLES; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a + 1; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < MAX_DISTANCE) {
+                        opacityValue = 1 - (distance / MAX_DISTANCE);
+                        ctx.strokeStyle = `rgba(47, 128, 237, ${opacityValue * 0.18})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particlesArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            connect();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+
+        init();
+        animate();
+    </script>
+
+</body>
+
+</html>

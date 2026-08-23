@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#14161d">
+    <meta name="color-scheme" content="light dark">
+
+    <title>gn-science</title>
+    <link rel="canonical" href="https://gn-sciencex.github.io/">
+    <meta name="title" content="gn-science">
+    <meta name="description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
+    <meta name="keywords" content="education, science, physics, chemistry">
+    <meta name="author" content="gn-science">
+    <meta name="robots" content="index, follow">
+    <meta name="rating" content="safe for kids">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" sizes="128x128" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="application-name" content="gn-science">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="gn-science">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="gn-science">
+    <meta property="og:url" content="https://gn-sciencex.github.io/">
+    <meta property="og:title" content="gn-science">
+    <meta property="og:description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
+    <meta property="og:image" content="https://gn-sciencex.github.io/preview.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:secure_url" content="https://gn-sciencex.github.io/preview.png">
+    <meta property="og:image:width" content="2400">
+    <meta property="og:image:height" content="1260">
+    <meta property="og:image:alt" content="Preview Image">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://gn-sciencex.github.io/">
+    <meta name="twitter:title" content="gn-science">
+    <meta name="twitter:description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
+    <meta name="twitter:image" content="https://gn-sciencex.github.io/preview.png">
+    <meta property="twitter:image:width" content="2400">
+    <meta property="twitter:image:height" content="1260">
+    <meta property="twitter:image:alt" content="Preview Image">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "gn-science",
+            "url": "https://gn-science.github.io/",
+            "description": "Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student."
+        }
+    </script>
+
+    <script>
+        (async function() {
+            const cdnList = [{
+                    url: "https://raw.githubusercontent.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://esm.sh/",
+                    type: "@"
+                },
+                {
+                    url: "https://raw.githack.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.staticdelivr.com/",
+                    type: "gh-slash"
+                },
+                {
+                    url: "https://fastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://gcore.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://quantil.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://originfastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://testingcf.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://raw.gitmirror.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.statically.io/",
+                    type: "@"
+                }
+            ];
+
+            window.buildCdnUrl = function(cdn, username, repo, branch, filepath) {
+                if (cdn.type === "@") {
+                    return `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
+                } else if (cdn.type === "gh-slash") {
+                    return `${cdn.url}gh/${username}/${repo}/${branch}/${filepath}`;
+                } else if (cdn.type === "raw") {
+                    return `${cdn.url}${username}/${repo}/${branch}/${filepath}`;
+                }
+            };
+
+            window.cdnList = cdnList;
+
+            let chosenUrl = "";
+            const username = "gn-science";
+            const repo = "gn-science.github.io";
+            const branch = "main";
+
+            for (const cdn of cdnList) {
+                try {
+                    const testUrl = window.buildCdnUrl(cdn, username, repo, branch, "index.html");
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+                    const response = await fetch(testUrl, {
+                        method: 'HEAD',
+                        mode: 'cors',
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+                    if (response.ok) {
+                        chosenUrl = window.buildCdnUrl(cdn, username, repo, branch, "");
+                        console.log(`[Base Script] Chosen CDN type: ${cdn.type} - URL: ${cdn.url}`);
+                        break;
+                    }
+                } catch (e) {
+                    console.warn(`[Base Script] ${cdn.url} failed, trying next fallback...`);
+                }
+            }
+
+            if (!chosenUrl) {
+                chosenUrl = window.buildCdnUrl(cdnList[0], username, repo, branch, "");
+            }
+
+            const finalBaseUrl = chosenUrl;
+
+            let base = document.querySelector("base") || document.createElement("base");
+            base.href = finalBaseUrl;
+
+            if (!document.querySelector("base")) {
+                document.head.prepend(base);
+            }
+
+            console.log("Base URL successfully set to: " + finalBaseUrl);
+        })();
+    </script>
+
+
+    <script>
+        window.addEventListener('beforeunload', function(event) {
+            event.preventDefault();
+        });
+    </script>
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WCGV1617WM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-WCGV1617WM');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7152030975429244" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-7152030975429244">
+    <script async src="https://fundingchoicesmessages.google.com/i/pub-7152030975429244?ers=1"></script>
+
+    <script>
+        (function() {
+            function signalGooglefcPresent() {
+                if (!window.frames['googlefcPresent']) {
+                    if (document.body) {
+                        const iframe = document.createElement('iframe');
+                        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                        iframe.style.display = 'none';
+                        iframe.name = 'googlefcPresent';
+                        document.body.appendChild(iframe);
+                    } else {
+                        setTimeout(signalGooglefcPresent, 0);
+                    }
+                }
+            }
+            signalGooglefcPresent();
+        })();
+    </script>
+
+
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --surface-color: #ffffff;
+            --surface-alt: #eef2f7;
+            --text-main: #1c1e21;
+            --text-muted: #65676b;
+            --primary: #0066cc;
+            --primary-hover: #0052a3;
+            --border: #e4e6eb;
+            --radius-md: 10px;
+            --radius-sm: 8px;
+            --transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+            --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.16);
+        }
+
+        .dark-mode {
+            --bg-color: #0b0c10;
+            --surface-color: #14161d;
+            --surface-alt: #11131a;
+            --text-main: #e3e6eb;
+            --text-muted: #8a8d91;
+            --primary: #2f80ed;
+            --primary-hover: #569aff;
+            --border: #232731;
+            --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.45);
+            --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.55);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: -2;
+        }
+
+        header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .search-wrapper {
+            display: flex;
+            gap: 0.6rem;
+            flex: 1;
+            max-width: 650px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.92rem;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+        }
+
+        .btn {
+            background-color: var(--surface-color);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--bg-color);
+            border-color: var(--text-muted);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3.25rem 1.25rem 2.5rem;
+            background-color: rgba(20, 22, 29, 0.7);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(6px);
+        }
+
+        body:not(.dark-mode) .hero {
+            background-color: rgba(255, 255, 255, 0.88);
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 1rem;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 6rem;
+            width: 100%;
+        }
+
+        .section-header {
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.6rem;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        #zoneCount {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        details#allZonesWrapper {
+            background: transparent;
+        }
+
+        details#allZonesWrapper summary {
+            list-style: none;
+        }
+
+        details#allZonesWrapper summary::-webkit-details-marker {
+            display: none;
+        }
+
+        #allSummary {
+            display: none;
+        }
+
+        .grid,
+        #container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .card,
+        .zone-item {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .icon-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--surface-alt);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.02em;
+        }
+
+        .card:hover,
+        .zone-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card img,
+        .zone-item img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--surface-alt);
+            display: block;
+        }
+
+        .card-content,
+        .zone-item button {
+            padding: 0.8rem;
+            background: var(--surface-color);
+            border: none;
+            text-align: left;
+            color: inherit;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .card-title,
+        .zone-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            line-height: 1.25;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .zone-item:hover .zone-name {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+        }
+
+        .card-subtitle,
+        .zone-subtitle {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #zoneViewer {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-color);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .viewer-header,
+        .zone-header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border);
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .zone-title {
+            min-width: 0;
+        }
+
+        #zoneName {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        #zoneId {
+            display: none;
+        }
+
+        #zoneAuthor {
+            display: inline-block;
+            margin-top: 0.15rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        #zoneAuthor:hover {
+            color: var(--text-main);
+            text-decoration: underline;
+        }
+
+        .viewer-controls,
+        .zone-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .zone-controls button {
+            background-color: var(--surface-color);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.65rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+
+        .zone-controls button:hover {
+            background-color: var(--bg-color);
+            border-color: var(--text-muted);
+            transform: translateY(-1px);
+        }
+
+        #zoneFrame {
+            flex: 1;
+            width: 100%;
+            min-height: 0;
+            border: none;
+            background: #000;
+            display: block;
+        }
+
+        #popupOverlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 1rem;
+        }
+
+        .popup {
+            background-color: var(--surface-color);
+            border-radius: var(--radius-md);
+            width: 100%;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-header {
+            padding: 1.1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background-color: var(--surface-color);
+            z-index: 10;
+        }
+
+        #popupTitle {
+            margin: 0;
+            font-size: 1.08rem;
+            font-weight: 700;
+        }
+
+        #popupClose {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+        }
+
+        #popupClose:hover {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        #popupBody {
+            padding: 1.25rem;
+            overflow-y: auto;
+            color: var(--text-main);
+        }
+
+        #popupBody input[type="text"],
+        #popupBody input[type="file"] {
+            width: 100%;
+            padding: 0.8rem 0.9rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-size: 0.92rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        #popupBody input[type="text"]:focus,
+        #popupBody input[type="file"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+        }
+
+        #settings-button,
+        .settings-button {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background-color: var(--surface-color);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        #settings-button:hover,
+        .settings-button:hover {
+            background-color: var(--bg-color);
+            border-color: var(--text-muted);
+            transform: translateY(-1px);
+        }
+
+        .settings-grid {
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .settings-group {
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .settings-group label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .settings-help {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: -0.15rem;
+        }
+
+        footer {
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border);
+            padding: 1rem 1.25rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            padding: 0.45rem 0.75rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+            background-color: var(--bg-color);
+        }
+
+        .footer-counter {
+            margin-top: 0.4rem;
+        }
+
+        .footer-counter img {
+            border: 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .ad-wrap {
+            margin: 0 auto;
+            max-width: 1400px;
+            padding: 0 1.25rem;
+        }
+
+        @media (max-width: 900px) {
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .search-wrapper {
+                order: 3;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .zone-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .zone-controls {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2.5rem 1rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            main {
+                padding: 1.5rem 1rem 5rem;
+            }
+
+            #container {
+                grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+                gap: 0.85rem;
+            }
+
+            .zone-item button {
+                padding: 0.65rem;
+            }
+
+            .zone-name {
+                font-size: 0.9rem;
+            }
+
+            .zone-subtitle {
+                font-size: 0.75rem;
+            }
+
+            .footer-links {
+                gap: 0.4rem;
+            }
+        }
+    </style>
+</head>
+
+
+<script>
+    if ("serviceWorker" in navigator && location.hostname === "gn-science.github.io") {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(reg => console.log("Service Worker registered"))
+                .catch(err => console.log("Service Worker failed:", err));
+        });
+    }
+</script>
+
+<body class="dark-mode">
+    <header>
+        <div class="nav-container">
+            <div class="logo" id="logoText" onclick="listZones()" title="Refresh zones">gn-science</div>
+            <div class="search-wrapper">
+                <input type="text" id="searchBar" placeholder="Search games..." oninput="filterZones()">
+                <select id="sortOptions" onchange="sortZones()" style="width:auto; min-width:130px;">
+                    <option value="name">A-Z</option>
+                    <option value="id">Recent</option>
+                </select>
+                <select id="tagOptions" onchange="filterZones()" style="width:auto; min-width:130px;">
+                    <option value="all">All Tags</option>
+                </select>
+            </div>
+
+            <div class="header-actions">
+                <button id="settings" class="btn">Settings</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 id="heroTitle">gn-science</h1>
+        <p id="heroDesc">Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.</p>
+    </section>
+
+    <main>
+        <div class="section-header">
+            <h2>Browse Library</h2>
+            <span id="zoneCount">Loading...</span>
+        </div>
+
+        <details id="allZonesWrapper" open>
+            <summary id="allSummary">All Zones</summary>
+            <div id="container">Loading...</div>
+        </details>
+    </main>
+
+    <div id="zoneViewer">
+        <div class="zone-header">
+            <div class="zone-title">
+                <h2 id="zoneName">zone</h2>
+                <span id="zoneId" style="display:none;"></span>
+                <a id="zoneAuthor" href="#" target="_blank">by Author</a>
+            </div>
+            <div class="zone-controls">
+                <button onclick="fullscreenZone()">Fullscreen</button>
+                <button onclick="aboutBlank()">Open in New Tab</button>
+                <button onclick="downloadZone()">Download</button>
+                <button onclick="closeZone()">Close</button>
+            </div>
+        </div>
+        <iframe id="zoneFrame"></iframe>
+    </div>
+
+    <div id="popupOverlay">
+        <div class="popup">
+            <div class="popup-header">
+                <h3 id="popupTitle">Title</h3>
+                <button id="popupClose" onclick="closePopup()">×</button>
+            </div>
+            <div id="popupBody">Content will be here</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" onclick="loadDMCA(); return false;">DMCA</a>
+            <a href="#" onclick="showContact(); return false;">Contact</a>
+            <a href="#" onclick="loadPrivacy(); return false;">Privacy Policy</a>
+        </div>
+
+        <div class="footer-counter">
+            <a href="https://www.hitwebcounter.com/" target="_blank" rel="noopener" title="Fast Counter">
+                <img src="https://www.hitwebcounter.com/counter/counter.php?page=21493765&amp;style=0036&amp;nbdigits=9&amp;type=page" alt="Fast Counter" decoding="async">
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const container = document.getElementById('container');
+        const zoneViewer = document.getElementById('zoneViewer');
+        let zoneFrame = document.getElementById('zoneFrame');
+        const searchBar = document.getElementById('searchBar');
+        const sortOptions = document.getElementById('sortOptions');
+        const zoneCount = document.getElementById('zoneCount');
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme");
+            const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+            if (savedTheme === "light") {
+                document.body.classList.remove("dark-mode");
+                if (themeMeta) themeMeta.setAttribute("content", "#ffffff");
+            } else {
+                document.body.classList.add("dark-mode");
+                if (themeMeta) themeMeta.setAttribute("content", "#14161d");
+            }
+
+            const savedName = localStorage.getItem("cloakName");
+            if (savedName) {
+                document.title = savedName;
+            }
+
+            const savedIcon = localStorage.getItem("cloakIcon");
+            if (savedIcon) {
+                const link = document.querySelector("link[rel~='icon']") || document.createElement("link");
+                link.rel = "icon";
+                link.href = savedIcon;
+                document.head.appendChild(link);
+            }
+        });
+
+        setTimeout(() => {
+            document.title = "Marty Games";
+
+            const logoEl = document.getElementById("logoText");
+            if (logoEl) logoEl.textContent = "Marty Games";
+
+            const heroTitleEl = document.getElementById("heroTitle");
+            if (heroTitleEl) heroTitleEl.textContent = "Marty Games";
+
+            const heroDescEl = document.getElementById("heroDesc");
+            if (heroDescEl) {
+                heroDescEl.textContent = "No downloads. No restrictions. Just fast, free, and completely unblocked games ready for any screen.";
+            }
+        }, 2000);
+
+        let selectedCdn = null;
+        let zones = [];
+
+        function getZoneUrl(zone) {
+            if (zone.url && !zone.repository) {
+                return zone.url;
+            }
+            const cdn = selectedCdn || (window.cdnList && window.cdnList[0]) || {
+                url: "https://cdn.jsdelivr.net/",
+                type: "@"
+            };
+            const username = zone.username || "sigmauaralarpersahur";
+            const repo = zone.repository || "";
+            const branch = zone.branch || "main";
+            const htmlFile = zone.html || "index.html";
+            const filepath = zone.path ? `${zone.path}/${htmlFile}` : htmlFile;
+
+            if (typeof window.buildCdnUrl === "function") {
+                return window.buildCdnUrl(cdn, username, repo, branch, filepath);
+            }
+            return `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
+        }
+
+        function getZoneCoverUrl(zone) {
+            if (zone.cover && (zone.cover.startsWith("http://") || zone.cover.startsWith("https://"))) {
+                return zone.cover;
+            }
+            const imgFile = zone.icon || zone.cover;
+            if (!imgFile) return "";
+            if (imgFile.startsWith("http://") || imgFile.startsWith("https://")) {
+                return imgFile;
+            }
+
+            const cdn = selectedCdn || (window.cdnList && window.cdnList[0]) || {
+                url: "https://cdn.jsdelivr.net/",
+                type: "@"
+            };
+            const username = zone.username || "sigmauaralarpersahur";
+            const repo = zone.repository || "";
+            const branch = zone.branch || "main";
+            const filepath = zone.path ? `${zone.path}/${imgFile}` : imgFile;
+
+            if (typeof window.buildCdnUrl === "function") {
+                return window.buildCdnUrl(cdn, username, repo, branch, filepath);
+            }
+            return `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
+        }
+
+        async function listZones() {
+            let json = null;
+            let resolvedItem = null;
+
+            const username = "sigmauaralarpersahur";
+            const repo = "zones";
+            const branch = "main";
+            const filepath = "main.json";
+
+            const cdnDefinitions = window.cdnList || [{
+                    url: "https://raw.githubusercontent.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://esm.sh/",
+                    type: "@"
+                },
+                {
+                    url: "https://raw.githack.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.staticdelivr.com/",
+                    type: "gh-slash"
+                },
+                {
+                    url: "https://fastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://gcore.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://quantil.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://originfastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://testingcf.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://raw.gitmirror.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.statically.io/",
+                    type: "@"
+                }
+            ];
+
+            for (const cdn of cdnDefinitions) {
+                let fetchUrl = "";
+
+                if (typeof window.buildCdnUrl === "function") {
+                    fetchUrl = window.buildCdnUrl(cdn, username, repo, branch, filepath);
+                } else {
+                    if (cdn.type === "@") {
+                        fetchUrl = `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
+                    } else if (cdn.type === "gh-slash") {
+                        fetchUrl = `${cdn.url}gh/${username}/${repo}/${branch}/${filepath}`;
+                    } else if (cdn.type === "raw") {
+                        fetchUrl = `${cdn.url}${username}/${repo}/${branch}/${filepath}`;
+                    }
+                }
+
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+                    const response = await fetch(fetchUrl + "?t=" + Date.now(), {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+
+                    if (response.ok) {
+                        json = await response.json();
+                        selectedCdn = cdn;
+                        resolvedItem = {
+                            url: fetchUrl,
+                            cdn: cdn
+                        };
+                        console.log(`[Zone Loader] Successfully fetched zones from CDN (${cdn.type}): ${fetchUrl}`);
+                        break;
+                    }
+                } catch (e) {
+                    console.warn(`[Zone Loader] CDN failed: ${fetchUrl}, checking next...`);
+                }
+            }
+
+            if (json) {
+                try {
+                    zones = json;
+                    populateTagDropdown();
+
+                    if (zones.length > 0) zones[0].featured = true;
+                    sortZones();
+
+                    const search = new URLSearchParams(window.location.search);
+                    const id = search.get('id');
+                    const embed = window.location.hash.includes("embed");
+
+                    if (id) {
+                        const zone = zones.find(z => String(z.id) === String(id));
+                        if (zone) {
+                            if (embed) {
+                                embedZone(zone);
+                            } else {
+                                openZone(zone);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error("[Zone Loader] Error parsing zones payload:", error);
+                    container.innerHTML = `Error loading zones content: ${error}`;
+                }
+            } else {
+                container.innerHTML = `Error loading zones: All CDN options failed.`;
+            }
+        }
+
+        function embedZone(zone) {
+            if (zone.url && !zone.repository) {
+                window.open(zone.url, "_blank");
+                return;
+            }
+
+            const url = getZoneUrl(zone);
+
+            fetch(url + "?t=" + Date.now())
+                .then(response => response.text())
+                .then(html => {
+                    document.documentElement.innerHTML = html;
+                    const popup = document.createElement("div");
+                    popup.style.cssText = "position:fixed;bottom:20px;right:20px;background-color:#cce5ff;color:#004085;padding:10px;border:1px solid #b8daff;border-radius:5px;box-shadow:0px 0px 10px rgba(0,0,0,0.1);font-family:Arial,sans-serif;";
+                    popup.innerHTML = `Play more games at <a href="https://marty-games.github.io" target="_blank" style="color:#004085;font-weight:bold;">https://marty-games.github.io</a>!`;
+
+                    const closeBtn = document.createElement("button");
+                    closeBtn.innerText = "✖";
+                    closeBtn.style.cssText = "margin-left:10px;background:none;border:none;cursor:pointer;color:#004085;font-weight:bold;";
+                    closeBtn.onclick = () => popup.remove();
+
+                    popup.appendChild(closeBtn);
+                    document.body.appendChild(popup);
+
+                    document.querySelectorAll('script').forEach(oldScript => {
+                        const newScript = document.createElement('script');
+                        if (oldScript.src) {
+                            newScript.src = oldScript.src;
+                        } else {
+                            newScript.textContent = oldScript.textContent;
+                        }
+                        document.body.appendChild(newScript);
+                    });
+                })
+                .catch(error => alert("Failed to load embedded zone: " + error));
+        }
+
+        function sortZones() {
+            const sortBy = sortOptions.value;
+            if (sortBy === 'name') {
+                zones.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (sortBy === 'id') {
+                zones.sort((a, b) => b.id - a.id);
+            }
+            const pinnedIds = [-1, 0];
+            zones.sort((a, b) => {
+                const indexA = pinnedIds.indexOf(a.id);
+                const indexB = pinnedIds.indexOf(b.id);
+
+                if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+                if (indexA !== -1) return -1;
+                if (indexB !== -1) return 1;
+                return 0;
+            });
+
+            displayZones(zones);
+        }
+
+        function displayZones(zonesToShow) {
+            container.innerHTML = "";
+
+            zonesToShow.forEach((file) => {
+                const zoneItem = document.createElement("div");
+                zoneItem.className = "zone-item";
+                zoneItem.onclick = () => openZone(file);
+
+                const img = document.createElement("img");
+                const placeholder = document.createElement("div");
+                placeholder.className = "icon-placeholder";
+                placeholder.textContent = "No icon";
+
+                img.onerror = () => {
+                    img.style.display = "none";
+                    placeholder.style.display = "flex";
+                };
+
+                const coverSrc = getZoneCoverUrl(file);
+
+                if (coverSrc) {
+                    placeholder.style.display = "none";
+                    img.dataset.src = coverSrc;
+                    img.alt = file.name;
+                    img.loading = "lazy";
+                    img.className = "lazy-zone-img";
+                    zoneItem.appendChild(img);
+                } else {
+                    img.style.display = "none";
+                    placeholder.style.display = "flex";
+                }
+                zoneItem.appendChild(placeholder);
+
+                const button = document.createElement("button");
+                button.setAttribute("title", file.name);
+                button.innerHTML = `<div class="zone-name">${file.name}</div><div class="zone-subtitle">${Array.isArray(file.special) ? file.special.join(" • ") : (file.special || "")}</div>`;
+
+                button.onclick = (event) => {
+                    event.stopPropagation();
+                    openZone(file);
+                };
+
+                zoneItem.appendChild(button);
+                container.appendChild(zoneItem);
+            });
+
+            if (zonesToShow.length === 0) {
+                container.innerHTML = "No results.";
+                zoneCount.textContent = "0 available";
+                document.getElementById("allSummary").textContent = "All Zones (0)";
+            } else {
+                zoneCount.textContent = `${zonesToShow.length} available`;
+                document.getElementById("allSummary").textContent = `All Zones (${zonesToShow.length})`;
+            }
+
+            const lazyImages = document.querySelectorAll('img.lazy-zone-img');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove("lazy-zone-img");
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: "100px",
+                threshold: 0.1
+            });
+
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        function filterZones() {
+            const query = searchBar.value.toLowerCase();
+            const selectedTag = document.getElementById('tagOptions').value;
+
+            const filtered = zones.filter(zone => {
+                const matchesQuery = !query || zone.name.toLowerCase().includes(query);
+
+                let matchesTag = false;
+                if (selectedTag === 'all') {
+                    matchesTag = true;
+                } else if (Array.isArray(zone.special)) {
+                    matchesTag = zone.special.includes(selectedTag);
+                } else if (zone.special) {
+                    matchesTag = zone.special === selectedTag;
+                }
+
+                return matchesQuery && matchesTag;
+            });
+
+            displayZones(filtered);
+        }
+
+        function populateTagDropdown() {
+            const tagOptions = document.getElementById('tagOptions');
+            if (!tagOptions) return;
+
+            tagOptions.innerHTML = '<option value="all">All Tags</option>';
+
+            const tagsSet = new Set();
+            zones.forEach(zone => {
+                if (Array.isArray(zone.special)) {
+                    zone.special.forEach(tag => tagsSet.add(tag));
+                } else if (zone.special) {
+                    tagsSet.add(zone.special);
+                }
+            });
+
+            Array.from(tagsSet).sort().forEach(tag => {
+                if (tag.toLowerCase() === "advertisement") return;
+
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagOptions.appendChild(option);
+            });
+        }
+
+        function openZone(file) {
+            if (file.url && !file.repository) {
+                window.open(file.url, "_blank");
+            } else {
+                const url = getZoneUrl(file);
+                fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
+                    if (zoneFrame.contentDocument === null) {
+                        zoneFrame = document.createElement("iframe");
+                        zoneFrame.id = "zoneFrame";
+                        zoneViewer.appendChild(zoneFrame);
+                    }
+                    zoneFrame.contentDocument.open();
+                    zoneFrame.contentDocument.write(html);
+                    zoneFrame.contentDocument.close();
+                    document.getElementById('zoneName').textContent = file.name;
+                    document.getElementById('zoneId').textContent = file.id;
+                    document.getElementById('zoneAuthor').textContent = "by " + (file.author || "Unknown");
+                    if (file.authorLink) {
+                        document.getElementById('zoneAuthor').href = file.authorLink;
+                    }
+                    zoneViewer.style.display = "flex";
+                    const newUrl = new URL(window.location);
+                    newUrl.searchParams.set('id', file.id);
+                    history.pushState(null, '', newUrl.toString());
+                    zoneViewer.hidden = true;
+                }).catch(error => alert("Failed to load zone: " + error));
+            }
+        }
+
+        function aboutBlank() {
+            const newWindow = window.open("about:blank", "_blank");
+            const currentZoneId = document.getElementById('zoneId').textContent;
+            const zone = zones.find(z => String(z.id) === String(currentZoneId));
+            if (!zone) return;
+
+            const url = getZoneUrl(zone);
+            fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
+                if (newWindow) {
+                    newWindow.document.open();
+                    newWindow.document.write(html);
+                    newWindow.document.close();
+                }
+            });
+        }
+
+        function closeZone() {
+            zoneViewer.hidden = false;
+            zoneViewer.style.display = "none";
+            zoneViewer.removeChild(zoneFrame);
+            const url = new URL(window.location);
+            url.searchParams.delete('id');
+            history.pushState(null, '', url.toString());
+        }
+
+        function downloadZone() {
+            const currentZoneId = document.getElementById('zoneId').textContent;
+            const zone = zones.find(z => String(z.id) === String(currentZoneId));
+            if (!zone) return;
+
+            const url = getZoneUrl(zone);
+
+            fetch(url + "?t=" + Date.now()).then(res => res.text()).then(text => {
+                const blob = new Blob([text], {
+                    type: "text/plain;charset=utf-8"
+                });
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = zone.name + ".html";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+            });
+        }
+
+        function fullscreenZone() {
+            if (zoneFrame.requestFullscreen) {
+                zoneFrame.requestFullscreen();
+            } else if (zoneFrame.mozRequestFullScreen) {
+                zoneFrame.mozRequestFullScreen();
+            } else if (zoneFrame.webkitRequestFullscreen) {
+                zoneFrame.webkitRequestFullscreen();
+            } else if (zoneFrame.msRequestFullscreen) {
+                zoneFrame.msRequestFullscreen();
+            }
+        }
+
+
+        function darkMode() {
+            document.body.classList.toggle("dark-mode");
+            const isDark = document.body.classList.contains("dark-mode");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+
+            const themeMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeMeta) {
+                themeMeta.setAttribute("content", isDark ? "#14161d" : "#ffffff");
+            }
+        }
+
+        function cloakIcon(url) {
+            const link = document.querySelector("link[rel~='icon']");
+            link.rel = "icon";
+            if ((url + "").trim().length === 0) {
+                link.href = "favicon.ico";
+                localStorage.removeItem("cloakIcon");
+            } else {
+                link.href = url;
+                localStorage.setItem("cloakIcon", url);
+            }
+            document.head.appendChild(link);
+        }
+
+        function cloakName(string) {
+            if ((string + "").trim().length === 0) {
+                document.title = "gn-science";
+                localStorage.removeItem("cloakName");
+                return;
+            }
+            document.title = string;
+            localStorage.setItem("cloakName", string);
+        }
+
+        function tabCloak() {
+            closePopup();
+            document.getElementById('popupTitle').textContent = "Tab Cloak";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-title-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Title</label><input type="text" id="tab-cloak-title-input" placeholder="e.g. Google, Canvas, Home" oninput="cloakName(this.value)"></div><div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-icon-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Icon URL</label><input type="text" id="tab-cloak-icon-input" placeholder="e.g. https://google.com/favicon.ico" oninput="cloakIcon(this.value)"></div><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center; width: 100%; margin-top: 0.5rem;">← Back to Settings</button>`;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+
+        const settings = document.getElementById('settings');
+        settings.addEventListener('click', () => {
+            document.getElementById('popupTitle').textContent = "Settings";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<button id="settings-button" onclick="darkMode()">Toggle Dark Mode</button><br><br><button id="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><br><br><button id="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button><br><br><button id="settings-button" onclick="loadMoreLinks()">More Links</button><br><br><button id="settings-button" onclick="showDownloadMenu()">Download</button><br>`;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        });
+
+        async function loadMoreLinks() {
+            closePopup();
+            document.getElementById('popupTitle').textContent = "Alternative Links";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = "<p>Loading alternative domains...</p>";
+            document.getElementById('popupOverlay').style.display = "flex";
+
+            try {
+                const response = await fetch('./domains.json?t=' + Date.now());
+                if (!response.ok) throw new Error("Could not retrieve domain list.");
+
+                const data = await response.json();
+
+                const domains = data.urls;
+
+                if (!Array.isArray(domains) || domains.length === 0) {
+                    popupBody.innerHTML = "<p>No links found in domains.json.</p>";
+                    return;
+                }
+
+                const shuffled = [...domains].sort(() => 0.5 - Math.random());
+                const selectedLinks = shuffled.slice(0, 4);
+
+                let htmlContent = '<div class="settings-grid" style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">';
+                selectedLinks.forEach(url => {
+                    let displayName = url;
+                    try {
+                        const parsed = new URL(url);
+                        displayName = parsed.hostname;
+                        if (displayName.startsWith('www.')) displayName = displayName.substring(4);
+                    } catch (e) {}
+
+                    htmlContent += `
+                <a href="${url}" target="_blank" rel="noopener noreferrer" id="settings-button" style="display: block; text-decoration: none; text-align: center; line-height: 1.5;">
+                    🌐 ${displayName}
+                </a>
+            `;
+                });
+                htmlContent += '</div>';
+
+                htmlContent += '<br><button id="settings-button" onclick="document.getElementById(\'settings\').click()" style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>';
+
+                popupBody.innerHTML = htmlContent;
+
+            } catch (error) {
+                console.error(error);
+                popupBody.innerHTML = `<p style="color: red;">Error fetching alternative links: ${error.message}</p>`;
+            }
+        }
+
+        function showDownloadMenu() {
+            document.getElementById('popupTitle').textContent = "Download Options";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<button id="settings-button" onclick="promptPWAInstall()">Download App (PWA)</button><br><br><button id="settings-button" onclick="downloadEmbedHTML()">Download HTML</button><br><br><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>`;
+        }
+
+        async function promptPWAInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const {
+                    outcome
+                } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            } else {
+                alert("App installation isn't available right now. You might have already installed it, or your browser doesn't support PWAs.");
+            }
+        }
+
+        async function downloadEmbedHTML() {
+            try {
+                const response = await fetch('./embed.html?t=' + Date.now());
+                if (!response.ok) throw new Error("Network response was not ok");
+
+                const text = await response.text();
+                const blob = new Blob([text], {
+                    type: "text/html;charset=utf-8"
+                });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Marty Games.html';
+                document.body.appendChild(a);
+                a.click();
+
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error("Failed to download HTML:", error);
+                alert("Failed to download the HTML file.");
+            }
+        }
+
+        function showContact() {
+            document.getElementById('popupTitle').textContent = "Contact";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<div style="max-height: 60vh; overflow-y: auto; font-family: inherit; line-height: 1.6; color: var(--text-main); padding-right: 10px;"><p style="margin-bottom: 1.25rem;">Get in touch with us using the methods below:<ul style="padding-left: 1.25rem; margin-bottom: 1.25rem; color: var(--text-muted);"><li style="margin-bottom: 0.5rem;"><strong style="color: var(--text-main);">Discord:</strong> <a href="https://discord.gg/F8kc4FKjnw" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">https://discord.gg/F8kc4FKjnw</a><li style="margin-bottom: 0.5rem;"><strong style="color: var(--text-main);">Email:</strong> <a href="mailto:marty-games@outlook.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">marty-games@outlook.com</a></ul><p style="text-align: center; margin-top: 20px;"><a href="https://discord.gg/F8kc4FKjnw" target="_blank" style="display: inline-block; background: #5865F2; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: var(--radius-sm); font-weight: 600; box-shadow: var(--shadow-sm); transition: var(--transition);">Join Our Discord</a></div>`;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+
+        function loadDMCA() {
+            document.getElementById('popupTitle').textContent = "DMCA";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<div style="max-height: 60vh; overflow-y: auto; font-family: inherit; line-height: 1.6; color: var(--text-main); padding-right: 10px;"><h2 style="margin-top: 0; color: var(--primary); font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;">DMCA</h2><p style="margin-bottom: 1.25rem;">If you own or have developed a game that is on <strong>Marty Games</strong> and would like it removed, please do one of the following:<ol style="padding-left: 1.25rem; margin-bottom: 1.25rem; color: var(--text-muted);"><li style="margin-bottom: 1rem;"><strong style="color: var(--text-main);"><a href="https://discord.gg/F8kc4FKjnw" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;">Join the Discord</a> </strong>and DM <strong>martin_mmc</strong> or ping me in a public channel.<br><span style="font-size: 0.82em; color: var(--text-muted);">[INSTANT RESPONSE]</span><li style="margin-bottom: 1rem;"><strong style="color: var(--text-main);">Email me at</strong> <a href="mailto:marty-games@outlook.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">marty-games@outlook.com</a> with the subject starting with <code style="background: var(--surface-alt); padding: 0.2rem 0.4rem; border-radius: var(--radius-sm); color: var(--text-main);">!DMCA</code>.<br><span style="font-size: 0.82em; color: var(--text-muted);">[DELAYED RESPONSE]</span></ol><p style="margin-bottom: 1.25rem; font-size: 0.9em; border-left: 3px solid var(--primary); padding-left: 10px; background: var(--surface-alt); padding: 10px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;"><strong>Note:</strong> If you are going to do an email, please show proof that you own the game before I have to ask.</div>`;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+
+        function loadPrivacy() {
+            document.getElementById('popupTitle').textContent = "Privacy Policy";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<div style="max-height: 60vh; overflow-y: auto; font-family: inherit; line-height: 1.6; color: var(--text-main); padding-right: 10px;"><h2 style="margin-top: 0; color: var(--primary); font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;">PRIVACY POLICY</h2><p style="font-size: 0.82em; color: var(--text-muted); margin-bottom: 1.25rem;">Last updated: July 9, 2026<p>Welcome to <strong>Marty Games</strong> (<a href="https://marty-games.github.io/" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">marty-games.github.io</a>). We value your privacy and want to be completely transparent about how our site operates.<hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;"><h3 style="color: var(--text-main); font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.4rem; font-weight: 700;">1. What Information Do We Collect?</h3><p><strong>Short answer:</strong> Virtually none.<ul style="padding-left: 1.25rem; margin-bottom: 1.25rem; color: var(--text-muted);"><li style="margin-bottom: 0.3rem;"><strong style="color: var(--text-main);">Personal Data:</strong> We do not require user accounts, names, emails, or phone numbers to play games on our site.<li style="margin-bottom: 0.3rem;"><strong style="color: var(--text-main);">Sensitive Data:</strong> We never collect, request, or process any sensitive personal information (e.g., location, identity details).<li style="margin-bottom: 0.3rem;"><strong style="color: var(--text-main);">Automated Logs:</strong> Because our site is hosted via GitHub, standard web traffic logs (like anonymous IP addresses or browser types) may be automatically processed by GitHub to ensure security and site stability. We do not use or sell this data.</ul><h3 style="color: var(--text-main); font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.4rem; font-weight: 700;">2. Third-Party Links & Games</h3><p style="margin-bottom: 1.25rem;">Our site hosts and links to various web games. Some of these third-party games might use cookies or local browser storage to save your game progress or high scores. We do not control these third parties, and we encourage you to check the individual policies of games if you have concerns.<h3 style="color: var(--text-main); font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.4rem; font-weight: 700;">3. Data Security</h3><p style="margin-bottom: 1.25rem;">We do our best to maintain a secure environment by using HTTPS encryption across our domain. However, please remember that no method of transmission over the internet is 100% secure.<h3 style="color: var(--text-main); font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.4rem; font-weight: 700;">4. Your Rights</h3><p style="margin-bottom: 1.25rem;">Since we do not store your personal information or track your identity, we have no personal data to delete, modify, or hand over. You are free to browse and play completely anonymously.<h3 style="color: var(--text-main); font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.4rem; font-weight: 700;">5. Updates & Contact</h3><p>We may update this policy occasionally to reflect changes to our site. If you have any questions, suggestions, or concerns regarding your privacy, feel free to reach out directly on our Discord server:<p style="text-align: center; margin-top: 20px;"><a href="https://discord.gg/F8kc4FKjnw" target="_blank" style="display: inline-block; background: #5865F2; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: var(--radius-sm); font-weight: 600; box-shadow: var(--shadow-sm); transition: var(--transition);">Join Our Discord</a></div>`;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+
+        function openMartyAboutBlank() {
+            const newWindow = window.open("about:blank", "_blank");
+            if (!newWindow) {
+                alert("Pop-up blocked! Please allow pop-ups for this site.");
+                return;
+            }
+
+            const currentHtml = document.documentElement.outerHTML;
+
+            newWindow.document.open();
+            newWindow.document.write(currentHtml);
+            newWindow.document.close();
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').style.display = "none";
+        }
+        listZones();
+
+        const schoolList = ["deledao", "goguardian", "lightspeed", "linewize", "securly", ".edu/"];
+
+        function isBlockedDomain(url) {
+            if (!url || typeof url !== 'string') return false;
+
+            try {
+                const base = (location.origin && location.origin !== 'null') ? location.origin : 'https://localhost';
+                const domain = new URL(url, base).hostname + "/";
+                return schoolList.some(school => domain.includes(school));
+            } catch (e) {
+                console.warn("URL parsing failed:", e);
+                return false;
+            }
+        }
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options) {
+            if (isBlockedDomain(url)) {
+                console.warn(`lam`);
+                return Promise.reject(new Error("lam"));
+            }
+            return originalFetch.apply(this, arguments);
+        };
+
+        const originalOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url) {
+            if (isBlockedDomain(url)) {
+                console.warn(`lam`);
+                return;
+            }
+            return originalOpen.apply(this, arguments);
+        };
+        HTMLCanvasElement.prototype.toDataURL = function(...args) {
+            return "";
+        };
+    </script>
+</body>
+
+</html>
