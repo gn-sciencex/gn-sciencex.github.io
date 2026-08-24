@@ -132,7 +132,7 @@
                     const timeoutId = setTimeout(() => controller.abort(), 2500);
 
                     const response = await fetch(testUrl, {
-                        method: 'HEAD',
+                        method: 'GET',
                         mode: 'cors',
                         signal: controller.signal
                     });
