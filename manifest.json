@@ -5,18 +5,6 @@
   "start_url": "/?utm_source=pwa",
   "scope": "/",
   "display": "standalone",
-  "display_override": [
-    "tabbed",
-    "standalone"
-  ],
-  "tab_strip": {
-    "home_tab": {
-      "visibility": "auto"
-    },
-    "new_tab_button": {
-      "url": "/?utm_source=pwa"
-    }
-  },
   "orientation": "any",
   "lang": "en-US",
   "dir": "ltr",
