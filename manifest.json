@@ -4,11 +4,23 @@
   "id": "/?utm_source=pwa",
   "start_url": "/?utm_source=pwa",
   "scope": "/",
-  "display": "minimal-ui",
+  "display": "standalone",
+  "display_override": [
+    "tabbed",
+    "standalone"
+  ],
+  "tab_strip": {
+    "home_tab": {
+      "visibility": "auto"
+    },
+    "new_tab_button": {
+      "url": "/?utm_source=pwa"
+    }
+  },
   "orientation": "any",
   "lang": "en-US",
   "dir": "ltr",
-  "description": "gn-science — Your #1 free science learning resource.",
+  "description": "GN Science — Your #1 free science learning resource.",
   "background_color": "#0B0C10",
   "theme_color": "#14161D",
   "categories": [
