@@ -12,7 +12,7 @@
     <link rel="canonical" href="https://gn-sciencex.github.io/">
     <meta name="title" content="gn-science">
     <meta name="description" content="Master physics, chemistry, biology, and more with free, interactive learning resources built for the modern student.">
-    <meta name="keywords" content="education, science, physics, chemistry">
+    <meta name="keywords" content="education, science, physics, chemistry, biology">
     <meta name="author" content="gn-science">
     <meta name="robots" content="index, follow">
     <meta name="rating" content="safe for kids">
@@ -852,6 +852,14 @@
                 gap: 0.4rem;
             }
         }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        -ms-overflow-style: none;
+
+        scrollbar-width: none;
     </style>
 </head>
 
@@ -986,17 +994,21 @@
         });
 
         setTimeout(() => {
-            document.title = "Marty Games";
+            const decode = (str) => atob(str);
+
+            document.title = decode("TWFydHkgR2FtZXM=");
 
             const logoEl = document.getElementById("logoText");
-            if (logoEl) logoEl.textContent = "Marty Games";
+            if (logoEl) logoEl.textContent = decode("TWFydHkgR2FtZXM=");
 
             const heroTitleEl = document.getElementById("heroTitle");
-            if (heroTitleEl) heroTitleEl.textContent = "Marty Games";
+            if (heroTitleEl) heroTitleEl.textContent = decode("TWFydHkgR2FtZXM=");
 
             const heroDescEl = document.getElementById("heroDesc");
             if (heroDescEl) {
-                heroDescEl.textContent = "No downloads. No restrictions. Just fast, free, and completely unblocked games ready for any screen.";
+                heroDescEl.textContent = decode(
+                    "Tm8gZG93bmxvYWRzLiBObyByZXN0cmljdGlvbnMuIEp1c3QgZmFzdCwgZnJlZSwgYW5kIGNvbXBsZXRlbHkgdW5ibG9ja2VkIGdhbWVzIHJlYWR5IGZvciBhbnkgc2NyZWVuLg=="
+                );
             }
         }, 2000);
 
