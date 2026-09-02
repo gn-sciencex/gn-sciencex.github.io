@@ -62,50 +62,18 @@
 
     <script>
         (async function() {
-            const cdnList = [{
-                    url: "https://raw.githubusercontent.com/",
-                    type: "raw"
-                },
-                {
-                    url: "https://cdn.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://esm.sh/",
-                    type: "@"
-                },
-                {
-                    url: "https://raw.githack.com/",
-                    type: "raw"
-                },
-                {
-                    url: "https://cdn.staticdelivr.com/",
-                    type: "gh-slash"
-                },
-                {
-                    url: "https://fastly.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://gcore.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://quantil.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://originfastly.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://testingcf.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://cdn.statically.io/",
-                    type: "@"
-                }
+            const cdnList = [
+                {url: "https://raw.githubusercontent.com/", type: "raw"},
+                {url: "https://cdn.jsdelivr.net/", type: "@"},
+                {url: "https://esm.sh/", type: "@"},
+                {url: "https://raw.githack.com/", type: "raw"},
+                {url: "https://cdn.staticdelivr.com/", type: "gh-slash"},
+                {url: "https://fastly.jsdelivr.net/", type: "@"},
+                {url: "https://gcore.jsdelivr.net/", type: "@"},
+                {url: "https://quantil.jsdelivr.net/", type: "@"},
+                {url: "https://originfastly.jsdelivr.net/", type: "@"},
+                {url: "https://testingcf.jsdelivr.net/", type: "@"},
+                {url: "https://cdn.statically.io/", type: "@"}
             ];
 
             window.buildCdnUrl = function(cdn, username, repo, branch, filepath) {
@@ -165,13 +133,26 @@
         })();
     </script>
 
-
     <script>
         window.addEventListener('beforeunload', function(event) {
             event.preventDefault();
         });
     </script>
 
+    <script>
+        (function() {
+            let originalTitle = document.title;
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    originalTitle = document.title;
+                    document.title = "New Tab";
+                } else {
+                    document.title = originalTitle;
+                }
+            });
+        })();
+    </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WCGV1617WM"></script>
     <script>
@@ -995,9 +976,7 @@
 
         setTimeout(() => {
             const decode = (str) => atob(str);
-
-            document.title = decode("TWFydHkgR2FtZXM=");
-
+            
             const logoEl = document.getElementById("logoText");
             if (logoEl) logoEl.textContent = decode("TWFydHkgR2FtZXM=");
 
@@ -1069,50 +1048,18 @@
             const branch = "main";
             const filepath = "main.json";
 
-            const cdnDefinitions = window.cdnList || [{
-                    url: "https://raw.githubusercontent.com/",
-                    type: "raw"
-                },
-                {
-                    url: "https://cdn.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://esm.sh/",
-                    type: "@"
-                },
-                {
-                    url: "https://raw.githack.com/",
-                    type: "raw"
-                },
-                {
-                    url: "https://cdn.staticdelivr.com/",
-                    type: "gh-slash"
-                },
-                {
-                    url: "https://fastly.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://gcore.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://quantil.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://originfastly.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://testingcf.jsdelivr.net/",
-                    type: "@"
-                },
-                {
-                    url: "https://cdn.statically.io/",
-                    type: "@"
-                }
+            const cdnDefinitions = [
+                {url: "https://raw.githubusercontent.com/", type: "raw"},
+                {url: "https://cdn.jsdelivr.net/", type: "@"},
+                {url: "https://esm.sh/", type: "@"},
+                {url: "https://raw.githack.com/", type: "raw"},
+                {url: "https://cdn.staticdelivr.com/", type: "gh-slash"},
+                {url: "https://fastly.jsdelivr.net/", type: "@"},
+                {url: "https://gcore.jsdelivr.net/", type: "@"},
+                {url: "https://quantil.jsdelivr.net/", type: "@"},
+                {url: "https://originfastly.jsdelivr.net/", type: "@"},
+                {url: "https://testingcf.jsdelivr.net/", type: "@"},
+                {url: "https://cdn.statically.io/", type: "@"}
             ];
 
             for (const cdn of cdnDefinitions) {
