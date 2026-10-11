@@ -1550,15 +1550,7 @@
                 alert("Failed to download the HTML file.");
             }
         }
-
-        function showContact() {
-            document.getElementById('popupTitle').textContent = "Contact";
-            const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<div style="max-height: 60vh; overflow-y: auto; font-family: inherit; line-height: 1.6; color: var(--text-main); padding-right: 10px;"><p style="margin-bottom: 1.25rem;">Get in touch with us using the methods below:<ul style="padding-left: 1.25rem; margin-bottom: 1.25rem; color: var(--text-muted);"><li style="margin-bottom: 0.5rem;"><strong style="color: var(--text-main);">Discord:</strong> <a href="https://discord.gg/F8kc4FKjnw" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">https://discord.gg/F8kc4FKjnw</a><li style="margin-bottom: 0.5rem;"><strong style="color: var(--text-main);">Email:</strong> <a href="mailto:marty-games@outlook.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">marty-games@outlook.com</a></ul><p style="text-align: center; margin-top: 20px;"><a href="https://discord.gg/F8kc4FKjnw" target="_blank" style="display: inline-block; background: #5865F2; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: var(--radius-sm); font-weight: 600; box-shadow: var(--shadow-sm); transition: var(--transition);">Join Our Discord</a></div>`;
-            popupBody.contentEditable = false;
-            document.getElementById('popupOverlay').style.display = "flex";
-        }
-
+        
         function loadDMCA() {
             document.getElementById('popupTitle').textContent = "DMCA";
             const popupBody = document.getElementById('popupBody');
@@ -1566,7 +1558,15 @@
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
-
+        
+        function showContact() {
+            document.getElementById('popupTitle').textContent = "Contact";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `<div style="max-height: 60vh; overflow-y: auto; font-family: inherit; line-height: 1.6; color: var(--text-main); padding-right: 10px;"><p style="margin-bottom: 1.25rem;">Get in touch with us using the methods below:<ul style="padding-left: 1.25rem; margin-bottom: 1.25rem; color: var(--text-muted);"><li style="margin-bottom: 0.5rem;"><strong style="color: var(--text-main);">Discord:</strong> <a href="https://discord.gg/F8kc4FKjnw" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">https://discord.gg/F8kc4FKjnw</a><li style="margin-bottom: 0.5rem;"><strong style="color: var(--text-main);">Email:</strong> <a href="mailto:marty-games@outlook.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">marty-games@outlook.com</a></ul><p style="text-align: center; margin-top: 20px;"></div>`;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+        
         function loadPrivacy() {
             document.getElementById('popupTitle').textContent = "Privacy Policy";
             const popupBody = document.getElementById('popupBody');
