@@ -62,20 +62,52 @@
 
     <script>
         (async function() {
-            const cdnList = [
-                {url: "https://raw.githubusercontent.com/", type: "raw"},
-                {url: "https://cdn.jsdelivr.net/", type: "@"},
-                {url: "https://esm.sh/", type: "@"},
-                {url: "https://raw.githack.com/", type: "raw"},
-                {url: "https://cdn.staticdelivr.com/", type: "gh-slash"},
-                {url: "https://fastly.jsdelivr.net/", type: "@"},
-                {url: "https://gcore.jsdelivr.net/", type: "@"},
-                {url: "https://quantil.jsdelivr.net/", type: "@"},
-                {url: "https://originfastly.jsdelivr.net/", type: "@"},
-                {url: "https://testingcf.jsdelivr.net/", type: "@"},
-                {url: "https://cdn.statically.io/", type: "@"}
+            const cdnList = [{
+                    url: "https://raw.githubusercontent.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://esm.sh/",
+                    type: "@"
+                },
+                {
+                    url: "https://raw.githack.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.staticdelivr.com/",
+                    type: "gh-slash"
+                },
+                {
+                    url: "https://fastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://gcore.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://quantil.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://originfastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://testingcf.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://cdn.statically.io/",
+                    type: "@"
+                }
             ];
-        
+
             window.buildCdnUrl = function(cdn, username, repo, branch, filepath) {
                 if (cdn.type === "@") {
                     return `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
@@ -85,26 +117,26 @@
                     return `${cdn.url}${username}/${repo}/${branch}/${filepath}`;
                 }
             };
-        
+
             window.cdnList = cdnList;
-        
+
             let chosenUrl = "";
             const username = "gn-sciencex";
             const repo = "gn-sciencex.github.io";
             const branch = "main";
-        
+
             for (const cdn of cdnList) {
                 try {
                     const testUrl = window.buildCdnUrl(cdn, username, repo, branch, "index.html");
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 2500);
-        
+
                     const response = await fetch(testUrl, {
                         method: 'GET',
                         mode: 'cors',
                         signal: controller.signal
                     });
-        
+
                     clearTimeout(timeoutId);
                     if (response.ok) {
                         chosenUrl = window.buildCdnUrl(cdn, username, repo, branch, "");
@@ -115,20 +147,20 @@
                     console.warn(`[Base Script] ${cdn.url} failed, trying next fallback...`);
                 }
             }
-        
+
             if (!chosenUrl) {
                 chosenUrl = window.buildCdnUrl(cdnList[0], username, repo, branch, "");
             }
-        
+
             const finalBaseUrl = chosenUrl;
-        
+
             let base = document.querySelector("base") || document.createElement("base");
             base.href = finalBaseUrl;
-        
+
             if (!document.querySelector("base")) {
                 document.head.prepend(base);
             }
-        
+
             console.log("Base URL successfully set to: " + finalBaseUrl);
         })();
     </script>
@@ -142,7 +174,7 @@
     <script>
         (function() {
             let originalTitle = document.title;
-        
+
             document.addEventListener('visibilitychange', function() {
                 if (document.hidden) {
                     originalTitle = document.title;
@@ -157,7 +189,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WCGV1617WM"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        
+
         function gtag() {
             dataLayer.push(arguments);
         }
@@ -769,7 +801,7 @@
         .footer-counter img {
             border: 0;
             max-width: 100%;
-            height: auto;
+            height auto;
         }
 
         .ad-wrap {
@@ -902,6 +934,7 @@
                 <a id="zoneAuthor" href="#" target="_blank">by Author</a>
             </div>
             <div class="zone-controls">
+                <button id="deleteZoneBtn" style="display:none;" onclick="deleteCurrentLocalZone()">Remove zone</button>
                 <button onclick="fullscreenZone()">Fullscreen</button>
                 <button onclick="aboutBlank()">Open in New Tab</button>
                 <button onclick="downloadZone()">Download</button>
@@ -942,17 +975,17 @@
         const searchBar = document.getElementById('searchBar');
         const sortOptions = document.getElementById('sortOptions');
         const zoneCount = document.getElementById('zoneCount');
-        
+
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
         });
-        
+
         document.addEventListener("DOMContentLoaded", () => {
             const savedTheme = localStorage.getItem("theme");
             const themeMeta = document.querySelector('meta[name="theme-color"]');
-        
+
             if (savedTheme === "light") {
                 document.body.classList.remove("dark-mode");
                 if (themeMeta) themeMeta.setAttribute("content", "#ffffff");
@@ -960,12 +993,12 @@
                 document.body.classList.add("dark-mode");
                 if (themeMeta) themeMeta.setAttribute("content", "#14161d");
             }
-        
+
             const savedName = localStorage.getItem("cloakName");
             if (savedName) {
                 document.title = savedName;
             }
-        
+
             const savedIcon = localStorage.getItem("cloakIcon");
             if (savedIcon) {
                 const link = document.querySelector("link[rel~='icon']") || document.createElement("link");
@@ -974,16 +1007,16 @@
                 document.head.appendChild(link);
             }
         });
-        
+
         setTimeout(() => {
             const decode = (str) => atob(str);
-            
+
             const logoEl = document.getElementById("logoText");
             if (logoEl) logoEl.textContent = decode("TWFydHkgR2FtZXM=");
-        
+
             const heroTitleEl = document.getElementById("heroTitle");
             if (heroTitleEl) heroTitleEl.textContent = decode("TWFydHkgR2FtZXM=");
-        
+
             const heroDescEl = document.getElementById("heroDesc");
             if (heroDescEl) {
                 heroDescEl.textContent = decode(
@@ -991,10 +1024,140 @@
                 );
             }
         }, 2000);
-        
+
         let selectedCdn = null;
         let zones = [];
-        
+
+        /* ================= Local Zone Management ================= */
+        function getLocalZones() {
+            try {
+                const data = localStorage.getItem('localZones');
+                return data ? JSON.parse(data) : [];
+            } catch (e) {
+                console.error("Failed to parse local zones from localStorage", e);
+                return [];
+            }
+        }
+
+        function loadLocalZonesIntoMemory() {
+            const localZones = getLocalZones();
+            const nonLocal = zones.filter(z => !z.isLocal);
+            zones = [...localZones, ...nonLocal];
+        }
+
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error);
+                reader.readAsText(file);
+            });
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function openAddLocalZonePopup() {
+            closePopup();
+            document.getElementById('popupTitle').textContent = "Add Zone";
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = `
+                <form onsubmit="event.preventDefault(); saveLocalZone();" style="display: flex; flex-direction: column; gap: 0.2rem;">
+                    <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Zone Name</label>
+                    <input type="text" id="localZoneName" placeholder="Enter zone name..." required>
+
+                    <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">HTML File (.html)</label>
+                    <input type="file" id="localZoneHtml" accept=".html,.htm" required>
+
+                    <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Icon File (Image)</label>
+                    <input type="file" id="localZoneIcon" accept="image/*">
+
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">Save Zone</button>
+                        <button type="button" class="btn" onclick="closePopup()" style="flex: 1;">Cancel</button>
+                    </div>
+                </form>
+            `;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+
+        async function saveLocalZone() {
+            const nameInput = document.getElementById('localZoneName');
+            const htmlInput = document.getElementById('localZoneHtml');
+            const iconInput = document.getElementById('localZoneIcon');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const htmlFile = htmlInput && htmlInput.files ? htmlInput.files[0] : null;
+            const iconFile = iconInput && iconInput.files ? iconInput.files[0] : null;
+
+            if (!name) {
+                alert("Please enter a name for the zone.");
+                return;
+            }
+            if (!htmlFile) {
+                alert("Please select an HTML file.");
+                return;
+            }
+
+            try {
+                const htmlContent = await readFileAsText(htmlFile);
+                let iconDataUrl = "";
+                if (iconFile) {
+                    iconDataUrl = await readFileAsDataURL(iconFile);
+                }
+
+                const newZone = {
+                    id: 'local_' + Date.now(),
+                    name: name,
+                    special: "Local Zone",
+                    author: "Local User",
+                    isLocal: true,
+                    htmlContent: htmlContent,
+                    cover: iconDataUrl
+                };
+
+                const localZones = getLocalZones();
+                localZones.unshift(newZone);
+                localStorage.setItem('localZones', JSON.stringify(localZones));
+
+                closePopup();
+                loadLocalZonesIntoMemory();
+                populateTagDropdown();
+                sortZones();
+            } catch (err) {
+                console.error("Error adding local zone:", err);
+                if (err.name === 'QuotaExceededError' || err.code === 22) {
+                    alert("Storage limit reached! Try using a smaller icon or HTML file.");
+                } else {
+                    alert("Error reading file: " + (err.message || err));
+                }
+            }
+        }
+
+        function deleteCurrentLocalZone() {
+            const currentZoneId = document.getElementById('zoneId').textContent;
+            const zone = zones.find(z => String(z.id) === String(currentZoneId));
+            if (!zone || !zone.isLocal) return;
+
+            if (confirm(`Are you sure you want to remove "${zone.name}"?`)) {
+                let localZones = getLocalZones();
+                localZones = localZones.filter(z => String(z.id) !== String(currentZoneId));
+                localStorage.setItem('localZones', JSON.stringify(localZones));
+                closeZone();
+                loadLocalZonesIntoMemory();
+                populateTagDropdown();
+                sortZones();
+            }
+        }
+        /* ========================================================== */
+
         function getZoneUrl(zone) {
             if (zone.url && !zone.repository) {
                 return zone.url;
@@ -1008,23 +1171,23 @@
             const branch = zone.branch || "main";
             const htmlFile = zone.html || "index.html";
             const filepath = zone.path ? `${zone.path}/${htmlFile}` : htmlFile;
-        
+
             if (typeof window.buildCdnUrl === "function") {
                 return window.buildCdnUrl(cdn, username, repo, branch, filepath);
             }
             return `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
         }
-        
+
         function getZoneCoverUrl(zone) {
-            if (zone.cover && (zone.cover.startsWith("http://") || zone.cover.startsWith("https://"))) {
+            if (zone.cover && (zone.cover.startsWith("http://") || zone.cover.startsWith("https://") || zone.cover.startsWith("data:"))) {
                 return zone.cover;
             }
             const imgFile = zone.icon || zone.cover;
             if (!imgFile) return "";
-            if (imgFile.startsWith("http://") || imgFile.startsWith("https://")) {
+            if (imgFile.startsWith("http://") || imgFile.startsWith("https://") || imgFile.startsWith("data:")) {
                 return imgFile;
             }
-        
+
             const cdn = selectedCdn || (window.cdnList && window.cdnList[0]) || {
                 url: "https://cdn.jsdelivr.net/",
                 type: "@"
@@ -1033,39 +1196,71 @@
             const repo = zone.repository || "";
             const branch = zone.branch || "main";
             const filepath = zone.path ? `${zone.path}/${imgFile}` : imgFile;
-        
+
             if (typeof window.buildCdnUrl === "function") {
                 return window.buildCdnUrl(cdn, username, repo, branch, filepath);
             }
             return `${cdn.url}gh/${username}/${repo}@${branch}/${filepath}`;
         }
-        
+
         async function listZones() {
             let json = null;
             let resolvedItem = null;
-        
+
             const username = "sigmauaralarpersahur";
             const repo = "zones";
             const branch = "main";
             const filepath = "main.json";
-        
-            const cdnDefinitions = [
-                {url: "https://raw.githubusercontent.com/", type: "raw"},
-                {url: "https://cdn.jsdelivr.net/", type: "@"},
-                {url: "https://esm.sh/", type: "@"},
-                {url: "https://raw.githack.com/", type: "raw"},
-                {url: "https://cdn.staticdelivr.com/", type: "gh-slash"},
-                {url: "https://fastly.jsdelivr.net/", type: "@"},
-                {url: "https://gcore.jsdelivr.net/", type: "@"},
-                {url: "https://quantil.jsdelivr.net/", type: "@"},
-                {url: "https://originfastly.jsdelivr.net/", type: "@"},
-                {url: "https://testingcf.jsdelivr.net/", type: "@"},
-                {url: "https://cdn.statically.io/", type: "@"}
+
+            const cdnDefinitions = [{
+                    url: "https://raw.githubusercontent.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://esm.sh/",
+                    type: "@"
+                },
+                {
+                    url: "https://raw.githack.com/",
+                    type: "raw"
+                },
+                {
+                    url: "https://cdn.staticdelivr.com/",
+                    type: "gh-slash"
+                },
+                {
+                    url: "https://fastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://gcore.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://quantil.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://originfastly.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://testingcf.jsdelivr.net/",
+                    type: "@"
+                },
+                {
+                    url: "https://cdn.statically.io/",
+                    type: "@"
+                }
             ];
-        
+
             for (const cdn of cdnDefinitions) {
                 let fetchUrl = "";
-        
+
                 if (typeof window.buildCdnUrl === "function") {
                     fetchUrl = window.buildCdnUrl(cdn, username, repo, branch, filepath);
                 } else {
@@ -1077,16 +1272,16 @@
                         fetchUrl = `${cdn.url}${username}/${repo}/${branch}/${filepath}`;
                     }
                 }
-        
+
                 try {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 2500);
-        
+
                     const response = await fetch(fetchUrl + "?t=" + Date.now(), {
                         signal: controller.signal
                     });
                     clearTimeout(timeoutId);
-        
+
                     if (response.ok) {
                         json = await response.json();
                         selectedCdn = cdn;
@@ -1101,19 +1296,20 @@
                     console.warn(`[Zone Loader] CDN failed: ${fetchUrl}, checking next...`);
                 }
             }
-        
+
             if (json) {
                 try {
                     zones = json;
+                    loadLocalZonesIntoMemory();
                     populateTagDropdown();
-        
-                    if (zones.length > 0) zones[0].featured = true;
+
+                    if (zones.length > 0 && !zones[0].isLocal) zones[0].featured = true;
                     sortZones();
-        
+
                     const search = new URLSearchParams(window.location.search);
                     const id = search.get('id');
                     const embed = window.location.hash.includes("embed");
-        
+
                     if (id) {
                         const zone = zones.find(z => String(z.id) === String(id));
                         if (zone) {
@@ -1129,18 +1325,29 @@
                     container.innerHTML = `Error loading zones content: ${error}`;
                 }
             } else {
-                container.innerHTML = `Error loading zones: All CDN options failed.`;
+                zones = [];
+                loadLocalZonesIntoMemory();
+                populateTagDropdown();
+                if (zones.length > 0) {
+                    sortZones();
+                } else {
+                    container.innerHTML = `Error loading zones: All CDN options failed.`;
+                }
             }
         }
-        
+
         function embedZone(zone) {
+            if (zone.isLocal) {
+                document.documentElement.innerHTML = zone.htmlContent || "";
+                return;
+            }
             if (zone.url && !zone.repository) {
                 window.open(zone.url, "_blank");
                 return;
             }
-        
+
             const url = getZoneUrl(zone);
-        
+
             fetch(url + "?t=" + Date.now())
                 .then(response => response.text())
                 .then(html => {
@@ -1148,15 +1355,15 @@
                     const popup = document.createElement("div");
                     popup.style.cssText = "position:fixed;bottom:20px;right:20px;background-color:#cce5ff;color:#004085;padding:10px;border:1px solid #b8daff;border-radius:5px;box-shadow:0px 0px 10px rgba(0,0,0,0.1);font-family:Arial,sans-serif;";
                     popup.innerHTML = `Play more games at <a href="https://marty-games.github.io" target="_blank" style="color:#004085;font-weight:bold;">https://marty-games.github.io</a>!`;
-        
+
                     const closeBtn = document.createElement("button");
                     closeBtn.innerText = "✖";
                     closeBtn.style.cssText = "margin-left:10px;background:none;border:none;cursor:pointer;color:#004085;font-weight:bold;";
                     closeBtn.onclick = () => popup.remove();
-        
+
                     popup.appendChild(closeBtn);
                     document.body.appendChild(popup);
-        
+
                     document.querySelectorAll('script').forEach(oldScript => {
                         const newScript = document.createElement('script');
                         if (oldScript.src) {
@@ -1169,13 +1376,17 @@
                 })
                 .catch(error => alert("Failed to load embedded zone: " + error));
         }
-        
+
         function sortZones() {
             const sortBy = sortOptions.value;
             if (sortBy === 'name') {
                 zones.sort((a, b) => a.name.localeCompare(b.name));
             } else if (sortBy === 'id') {
-                zones.sort((a, b) => b.id - a.id);
+                zones.sort((a, b) => {
+                    const numA = typeof a.id === 'number' ? a.id : (parseInt(String(a.id).replace('local_', '')) || 0);
+                    const numB = typeof b.id === 'number' ? b.id : (parseInt(String(b.id).replace('local_', '')) || 0);
+                    return numB - numA;
+                });
             } else if (sortBy === 'random') {
                 zones.sort(() => Math.random() - 0.5);
             }
@@ -1183,36 +1394,36 @@
             zones.sort((a, b) => {
                 const indexA = pinnedIds.indexOf(a.id);
                 const indexB = pinnedIds.indexOf(b.id);
-        
+
                 if (indexA !== -1 && indexB !== -1) return indexA - indexB;
                 if (indexA !== -1) return -1;
                 if (indexB !== -1) return 1;
                 return 0;
             });
-        
+
             displayZones(zones);
         }
-        
+
         function displayZones(zonesToShow) {
             container.innerHTML = "";
-        
+
             zonesToShow.forEach((file) => {
                 const zoneItem = document.createElement("div");
                 zoneItem.className = "zone-item";
                 zoneItem.onclick = () => openZone(file);
-        
+
                 const img = document.createElement("img");
                 const placeholder = document.createElement("div");
                 placeholder.className = "icon-placeholder";
-                placeholder.textContent = "No icon";
-        
+                placeholder.textContent = file.isLocal ? "Local Zone" : "No icon";
+
                 img.onerror = () => {
                     img.style.display = "none";
                     placeholder.style.display = "flex";
                 };
-        
+
                 const coverSrc = getZoneCoverUrl(file);
-        
+
                 if (coverSrc) {
                     placeholder.style.display = "none";
                     img.dataset.src = coverSrc;
@@ -1225,20 +1436,20 @@
                     placeholder.style.display = "flex";
                 }
                 zoneItem.appendChild(placeholder);
-        
+
                 const button = document.createElement("button");
                 button.setAttribute("title", file.name);
                 button.innerHTML = `<div class="zone-name">${file.name}</div><div class="zone-subtitle">${Array.isArray(file.special) ? file.special.join(" • ") : (file.special || "")}</div>`;
-        
+
                 button.onclick = (event) => {
                     event.stopPropagation();
                     openZone(file);
                 };
-        
+
                 zoneItem.appendChild(button);
                 container.appendChild(zoneItem);
             });
-        
+
             if (zonesToShow.length === 0) {
                 container.innerHTML = "No results.";
                 zoneCount.textContent = "0 available";
@@ -1247,7 +1458,7 @@
                 zoneCount.textContent = `${zonesToShow.length} available`;
                 document.getElementById("allSummary").textContent = `All Zones (${zonesToShow.length})`;
             }
-        
+
             const lazyImages = document.querySelectorAll('img.lazy-zone-img');
             const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -1262,19 +1473,19 @@
                 rootMargin: "100px",
                 threshold: 0.1
             });
-        
+
             lazyImages.forEach(img => {
                 imageObserver.observe(img);
             });
         }
-        
+
         function filterZones() {
             const query = searchBar.value.toLowerCase();
             const selectedTag = document.getElementById('tagOptions').value;
-        
+
             const filtered = zones.filter(zone => {
                 const matchesQuery = !query || zone.name.toLowerCase().includes(query);
-        
+
                 let matchesTag = false;
                 if (selectedTag === 'all') {
                     matchesTag = true;
@@ -1283,19 +1494,19 @@
                 } else if (zone.special) {
                     matchesTag = zone.special === selectedTag;
                 }
-        
+
                 return matchesQuery && matchesTag;
             });
-        
+
             displayZones(filtered);
         }
-        
+
         function populateTagDropdown() {
             const tagOptions = document.getElementById('tagOptions');
             if (!tagOptions) return;
-        
+
             tagOptions.innerHTML = '<option value="all">All Tags</option>';
-        
+
             const tagsSet = new Set();
             zones.forEach(zone => {
                 if (Array.isArray(zone.special)) {
@@ -1304,18 +1515,45 @@
                     tagsSet.add(zone.special);
                 }
             });
-        
+
             Array.from(tagsSet).sort().forEach(tag => {
                 if (tag.toLowerCase() === "advertisement") return;
-        
+
                 const option = document.createElement('option');
                 option.value = tag;
                 option.textContent = tag;
                 tagOptions.appendChild(option);
             });
         }
-        
+
         function openZone(file) {
+            const deleteBtn = document.getElementById('deleteZoneBtn');
+            if (deleteBtn) {
+                deleteBtn.style.display = file.isLocal ? "inline-block" : "none";
+            }
+
+            if (file.isLocal) {
+                if (zoneFrame.contentDocument === null) {
+                    zoneFrame = document.createElement("iframe");
+                    zoneFrame.id = "zoneFrame";
+                    zoneViewer.appendChild(zoneFrame);
+                }
+                zoneFrame.contentDocument.open();
+                zoneFrame.contentDocument.write(file.htmlContent || "");
+                zoneFrame.contentDocument.close();
+                document.getElementById('zoneName').textContent = file.name;
+                document.getElementById('zoneId').textContent = file.id;
+                document.getElementById('zoneAuthor').textContent = "by " + (file.author || "Local User");
+                document.getElementById('zoneAuthor').removeAttribute("href");
+
+                zoneViewer.style.display = "flex";
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('id', file.id);
+                history.pushState(null, '', newUrl.toString());
+                zoneViewer.hidden = true;
+                return;
+            }
+
             if (file.url && !file.repository) {
                 window.open(file.url, "_blank");
             } else {
@@ -1343,13 +1581,22 @@
                 }).catch(error => alert("Failed to load zone: " + error));
             }
         }
-        
+
         function aboutBlank() {
             const newWindow = window.open("about:blank", "_blank");
             const currentZoneId = document.getElementById('zoneId').textContent;
             const zone = zones.find(z => String(z.id) === String(currentZoneId));
             if (!zone) return;
-        
+
+            if (zone.isLocal) {
+                if (newWindow) {
+                    newWindow.document.open();
+                    newWindow.document.write(zone.htmlContent || "");
+                    newWindow.document.close();
+                }
+                return;
+            }
+
             const url = getZoneUrl(zone);
             fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
                 if (newWindow) {
@@ -1359,7 +1606,7 @@
                 }
             });
         }
-        
+
         function closeZone() {
             zoneViewer.hidden = false;
             zoneViewer.style.display = "none";
@@ -1368,14 +1615,29 @@
             url.searchParams.delete('id');
             history.pushState(null, '', url.toString());
         }
-        
+
         function downloadZone() {
             const currentZoneId = document.getElementById('zoneId').textContent;
             const zone = zones.find(z => String(z.id) === String(currentZoneId));
             if (!zone) return;
-        
+
+            if (zone.isLocal) {
+                const blob = new Blob([zone.htmlContent || ""], {
+                    type: "text/html;charset=utf-8"
+                });
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = (zone.name || "local-zone") + ".html";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+                return;
+            }
+
             const url = getZoneUrl(zone);
-        
+
             fetch(url + "?t=" + Date.now()).then(res => res.text()).then(text => {
                 const blob = new Blob([text], {
                     type: "text/plain;charset=utf-8"
@@ -1390,7 +1652,7 @@
                 URL.revokeObjectURL(blobUrl);
             });
         }
-        
+
         function fullscreenZone() {
             if (zoneFrame.requestFullscreen) {
                 zoneFrame.requestFullscreen();
@@ -1402,19 +1664,19 @@
                 zoneFrame.msRequestFullscreen();
             }
         }
-        
-        
+
+
         function darkMode() {
             document.body.classList.toggle("dark-mode");
             const isDark = document.body.classList.contains("dark-mode");
             localStorage.setItem("theme", isDark ? "dark" : "light");
-        
+
             const themeMeta = document.querySelector('meta[name="theme-color"]');
             if (themeMeta) {
                 themeMeta.setAttribute("content", isDark ? "#14161d" : "#ffffff");
             }
         }
-        
+
         function cloakIcon(url) {
             const link = document.querySelector("link[rel~='icon']");
             link.rel = "icon";
@@ -1427,7 +1689,7 @@
             }
             document.head.appendChild(link);
         }
-        
+
         function cloakName(string) {
             if ((string + "").trim().length === 0) {
                 document.title = "gn-science";
@@ -1437,7 +1699,7 @@
             document.title = string;
             localStorage.setItem("cloakName", string);
         }
-        
+
         function tabCloak() {
             closePopup();
             document.getElementById('popupTitle').textContent = "Tab Cloak";
@@ -1446,39 +1708,39 @@
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
-        
+
         const settings = document.getElementById('settings');
         settings.addEventListener('click', () => {
             document.getElementById('popupTitle').textContent = "Settings";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<button id="settings-button" onclick="darkMode()">Toggle Dark Mode</button><br><br><button id="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><br><br><button id="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button><br><br><button id="settings-button" onclick="loadMoreLinks()">More Links</button><br><br><button id="settings-button" onclick="showDownloadMenu()">Download</button><br>`;
+            popupBody.innerHTML = `<button id="settings-button" onclick="darkMode()">Toggle Dark Mode</button><br><br><button id="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><br><br><button id="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button><br><br><button id="settings-button" onclick="loadMoreLinks()">More Links</button><br><br><button id="settings-button" onclick="openAddLocalZonePopup()">Add Local Zone</button><br><br><button id="settings-button" onclick="showDownloadMenu()">Download</button><br>`;
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         });
-        
+
         async function loadMoreLinks() {
             closePopup();
             document.getElementById('popupTitle').textContent = "Alternative Links";
             const popupBody = document.getElementById('popupBody');
             popupBody.innerHTML = "<p>Loading alternative domains...</p>";
             document.getElementById('popupOverlay').style.display = "flex";
-        
+
             try {
                 const response = await fetch('./domains.json?t=' + Date.now());
                 if (!response.ok) throw new Error("Could not retrieve domain list.");
-        
+
                 const data = await response.json();
-        
+
                 const domains = data.urls;
-        
+
                 if (!Array.isArray(domains) || domains.length === 0) {
                     popupBody.innerHTML = "<p>No links found in domains.json.</p>";
                     return;
                 }
-        
+
                 const shuffled = [...domains].sort(() => 0.5 - Math.random());
                 const selectedLinks = shuffled.slice(0, 4);
-        
+
                 let htmlContent = '<div class="settings-grid" style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">';
                 selectedLinks.forEach(url => {
                     let displayName = url;
@@ -1487,7 +1749,7 @@
                         displayName = parsed.hostname;
                         if (displayName.startsWith('www.')) displayName = displayName.substring(4);
                     } catch (e) {}
-        
+
                     htmlContent += `
                 <a href="${url}" target="_blank" rel="noopener noreferrer" id="settings-button" style="display: block; text-decoration: none; text-align: center; line-height: 1.5;">
                     🌐 ${displayName}
@@ -1495,23 +1757,23 @@
             `;
                 });
                 htmlContent += '</div>';
-        
+
                 htmlContent += '<br><button id="settings-button" onclick="document.getElementById(\'settings\').click()" style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>';
-        
+
                 popupBody.innerHTML = htmlContent;
-        
+
             } catch (error) {
                 console.error(error);
                 popupBody.innerHTML = `<p style="color: red;">Error fetching alternative links: ${error.message}</p>`;
             }
         }
-        
+
         function showDownloadMenu() {
             document.getElementById('popupTitle').textContent = "Download Options";
             const popupBody = document.getElementById('popupBody');
             popupBody.innerHTML = `<button id="settings-button" onclick="promptPWAInstall()">Download App (PWA)</button><br><br><button id="settings-button" onclick="downloadEmbedHTML()">Download HTML</button><br><br><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>`;
         }
-        
+
         async function promptPWAInstall() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
@@ -1528,24 +1790,24 @@
                 alert("App installation isn't available right now. You might have already installed it, or your browser doesn't support PWAs.");
             }
         }
-        
+
         async function downloadEmbedHTML() {
             try {
                 const response = await fetch('./embed.html?t=' + Date.now());
                 if (!response.ok) throw new Error("Network response was not ok");
-        
+
                 const text = await response.text();
                 const blob = new Blob([text], {
                     type: "text/html;charset=utf-8"
                 });
                 const url = URL.createObjectURL(blob);
-        
+
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = 'Marty Games.html';
                 document.body.appendChild(a);
                 a.click();
-        
+
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
             } catch (error) {
@@ -1553,7 +1815,7 @@
                 alert("Failed to download the HTML file.");
             }
         }
-        
+
         function loadDMCA() {
             document.getElementById('popupTitle').textContent = "DMCA";
             const popupBody = document.getElementById('popupBody');
@@ -1561,7 +1823,7 @@
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
-        
+
         function showContact() {
             document.getElementById('popupTitle').textContent = "Contact";
             const popupBody = document.getElementById('popupBody');
@@ -1569,7 +1831,7 @@
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
-        
+
         function loadPrivacy() {
             document.getElementById('popupTitle').textContent = "Privacy Policy";
             const popupBody = document.getElementById('popupBody');
@@ -1577,31 +1839,31 @@
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
-        
+
         function openMartyAboutBlank() {
             const newWindow = window.open("about:blank", "_blank");
             if (!newWindow) {
                 alert("Pop-up blocked! Please allow pop-ups for this site.");
                 return;
             }
-        
+
             const currentHtml = document.documentElement.outerHTML;
-        
+
             newWindow.document.open();
             newWindow.document.write(currentHtml);
             newWindow.document.close();
         }
-        
+
         function closePopup() {
             document.getElementById('popupOverlay').style.display = "none";
         }
         listZones();
-        
+
         const schoolList = ["deledao", "goguardian", "lightspeed", "linewize", "securly", ".edu/"];
-        
+
         function isBlockedDomain(url) {
             if (!url || typeof url !== 'string') return false;
-        
+
             try {
                 const base = (location.origin && location.origin !== 'null') ? location.origin : 'https://localhost';
                 const domain = new URL(url, base).hostname + "/";
@@ -1619,7 +1881,7 @@
             }
             return originalFetch.apply(this, arguments);
         };
-        
+
         const originalOpen = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function(method, url) {
             if (isBlockedDomain(url)) {
