@@ -1322,7 +1322,7 @@
                     }
                 } catch (error) {
                     console.error("[Zone Loader] Error parsing zones payload:", error);
-                    container.innerHTML = `Error loading zones content: ${error}`;
+                    container.inner = `Error loading zones content: ${error}`;
                 }
             } else {
                 zones = [];
@@ -1331,14 +1331,14 @@
                 if (zones.length > 0) {
                     sortZones();
                 } else {
-                    container.innerHTML = `Error loading zones: All CDN options failed.`;
+                    container.inner = `Error loading zones: All CDN options failed.`;
                 }
             }
         }
 
         function embedZone(zone) {
             if (zone.isLocal) {
-                document.documentElement.innerHTML = zone.htmlContent || "";
+                document.documentElement.inner = zone.Content || "";
                 return;
             }
             if (zone.url && !zone.repository) {
@@ -1350,11 +1350,11 @@
 
             fetch(url + "?t=" + Date.now())
                 .then(response => response.text())
-                .then(html => {
-                    document.documentElement.innerHTML = html;
+                .then( => {
+                    document.documentElement.inner = ;
                     const popup = document.createElement("div");
                     popup.style.cssText = "position:fixed;bottom:20px;right:20px;background-color:#cce5ff;color:#004085;padding:10px;border:1px solid #b8daff;border-radius:5px;box-shadow:0px 0px 10px rgba(0,0,0,0.1);font-family:Arial,sans-serif;";
-                    popup.innerHTML = `Play more games at <a href="https://marty-games.github.io" target="_blank" style="color:#004085;font-weight:bold;">https://marty-games.github.io</a>!`;
+                    popup.inner = `Play more games at <a href="https://marty-games.github.io" target="_blank" style="color:#004085;font-weight:bold;">https://marty-games.github.io</a>!`;
 
                     const closeBtn = document.createElement("button");
                     closeBtn.innerText = "✖";
@@ -1405,7 +1405,7 @@
         }
 
         function displayZones(zonesToShow) {
-            container.innerHTML = "";
+            container.inner = "";
 
             zonesToShow.forEach((file) => {
                 const zoneItem = document.createElement("div");
@@ -1439,7 +1439,7 @@
 
                 const button = document.createElement("button");
                 button.setAttribute("title", file.name);
-                button.innerHTML = `<div class="zone-name">${file.name}</div><div class="zone-subtitle">${Array.isArray(file.special) ? file.special.join(" • ") : (file.special || "")}</div>`;
+                button.inner = `<div class="zone-name">${file.name}</div><div class="zone-subtitle">${Array.isArray(file.special) ? file.special.join(" • ") : (file.special || "")}</div>`;
 
                 button.onclick = (event) => {
                     event.stopPropagation();
@@ -1451,7 +1451,7 @@
             });
 
             if (zonesToShow.length === 0) {
-                container.innerHTML = "No results.";
+                container.inner = "No results.";
                 zoneCount.textContent = "0 available";
                 document.getElementById("allSummary").textContent = "All Zones (0)";
             } else {
@@ -1505,7 +1505,7 @@
             const tagOptions = document.getElementById('tagOptions');
             if (!tagOptions) return;
 
-            tagOptions.innerHTML = '<option value="all">All Tags</option>';
+            tagOptions.inner = '<option value="all">All Tags</option>';
 
             const tagsSet = new Set();
             zones.forEach(zone => {
@@ -1539,7 +1539,7 @@
                     zoneViewer.appendChild(zoneFrame);
                 }
                 zoneFrame.contentDocument.open();
-                zoneFrame.contentDocument.write(file.htmlContent || "");
+                zoneFrame.contentDocument.write(file.Content || "");
                 zoneFrame.contentDocument.close();
                 document.getElementById('zoneName').textContent = file.name;
                 document.getElementById('zoneId').textContent = file.id;
@@ -1558,14 +1558,14 @@
                 window.open(file.url, "_blank");
             } else {
                 const url = getZoneUrl(file);
-                fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
+                fetch(url + "?t=" + Date.now()).then(response => response.text()).then( => {
                     if (zoneFrame.contentDocument === null) {
                         zoneFrame = document.createElement("iframe");
                         zoneFrame.id = "zoneFrame";
                         zoneViewer.appendChild(zoneFrame);
                     }
                     zoneFrame.contentDocument.open();
-                    zoneFrame.contentDocument.write(html);
+                    zoneFrame.contentDocument.write();
                     zoneFrame.contentDocument.close();
                     document.getElementById('zoneName').textContent = file.name;
                     document.getElementById('zoneId').textContent = file.id;
@@ -1591,17 +1591,17 @@
             if (zone.isLocal) {
                 if (newWindow) {
                     newWindow.document.open();
-                    newWindow.document.write(zone.htmlContent || "");
+                    newWindow.document.write(zone.Content || "");
                     newWindow.document.close();
                 }
                 return;
             }
 
             const url = getZoneUrl(zone);
-            fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
+            fetch(url + "?t=" + Date.now()).then(response => response.text()).then( => {
                 if (newWindow) {
                     newWindow.document.open();
-                    newWindow.document.write(html);
+                    newWindow.document.write();
                     newWindow.document.close();
                 }
             });
@@ -1622,13 +1622,13 @@
             if (!zone) return;
 
             if (zone.isLocal) {
-                const blob = new Blob([zone.htmlContent || ""], {
-                    type: "text/html;charset=utf-8"
+                const blob = new Blob([zone.Content || ""], {
+                    type: "text/;charset=utf-8"
                 });
                 const blobUrl = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = blobUrl;
-                a.download = (zone.name || "local-zone") + ".html";
+                a.download = (zone.name || "local-zone") + ".";
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -1645,7 +1645,7 @@
                 const blobUrl = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = blobUrl;
-                a.download = zone.name + ".html";
+                a.download = zone.name + ".";
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -1704,7 +1704,7 @@
             closePopup();
             document.getElementById('popupTitle').textContent = "Tab Cloak";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-title-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Title</label><input type="text" id="tab-cloak-title-input" placeholder="e.g. Google, Canvas, Home" oninput="cloakName(this.value)"></div><div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-icon-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Icon URL</label><input type="text" id="tab-cloak-icon-input" placeholder="e.g. https://google.com/favicon.ico" oninput="cloakIcon(this.value)"></div><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center; width: 100%; margin-top: 0.5rem;">← Back to Settings</button>`;
+            popupBody.inner = `<div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-title-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Title</label><input type="text" id="tab-cloak-title-input" placeholder="e.g. Google, Canvas, Home" oninput="cloakName(this.value)"></div><div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-icon-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Icon URL</label><input type="text" id="tab-cloak-icon-input" placeholder="e.g. https://google.com/favicon.ico" oninput="cloakIcon(this.value)"></div><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center; width: 100%; margin-top: 0.5rem;">← Back to Settings</button>`;
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
@@ -1713,7 +1713,7 @@
         settings.addEventListener('click', () => {
             document.getElementById('popupTitle').textContent = "Settings";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<button id="settings-button" onclick="darkMode()">Toggle Dark Mode</button><br><br><button id="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><br><br><button id="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button><br><br><button id="settings-button" onclick="loadMoreLinks()">More Links</button><br><br><button id="settings-button" onclick="openAddLocalZonePopup()">Add Local Zone</button><br><br><button id="settings-button" onclick="showDownloadMenu()">Download</button><br>`;
+            popupBody.inner = `<button id="settings-button" onclick="darkMode()">Toggle Dark Mode</button><br><br><button id="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><br><br><button id="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button><br><br><button id="settings-button" onclick="loadMoreLinks()">More Links</button><br><br><button id="settings-button" onclick="openAddLocalZonePopup()">Add Local Zone</button><br><br><button id="settings-button" onclick="showDownloadMenu()">Download</button><br>`;
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         });
@@ -1722,7 +1722,7 @@
             closePopup();
             document.getElementById('popupTitle').textContent = "Alternative Links";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = "<p>Loading alternative domains...</p>";
+            popupBody.inner = "<p>Loading alternative domains...</p>";
             document.getElementById('popupOverlay').style.display = "flex";
 
             try {
@@ -1734,14 +1734,14 @@
                 const domains = data.urls;
 
                 if (!Array.isArray(domains) || domains.length === 0) {
-                    popupBody.innerHTML = "<p>No links found in domains.json.</p>";
+                    popupBody.inner = "<p>No links found in domains.json.</p>";
                     return;
                 }
 
                 const shuffled = [...domains].sort(() => 0.5 - Math.random());
                 const selectedLinks = shuffled.slice(0, 4);
 
-                let htmlContent = '<div class="settings-grid" style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">';
+                let Content = '<div class="settings-grid" style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">';
                 selectedLinks.forEach(url => {
                     let displayName = url;
                     try {
@@ -1750,28 +1750,28 @@
                         if (displayName.startsWith('www.')) displayName = displayName.substring(4);
                     } catch (e) {}
 
-                    htmlContent += `
+                    Content += `
                 <a href="${url}" target="_blank" rel="noopener noreferrer" id="settings-button" style="display: block; text-decoration: none; text-align: center; line-height: 1.5;">
                     🌐 ${displayName}
                 </a>
             `;
                 });
-                htmlContent += '</div>';
+                Content += '</div>';
 
-                htmlContent += '<br><button id="settings-button" onclick="document.getElementById(\'settings\').click()" style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>';
+                Content += '<br><button id="settings-button" onclick="document.getElementById(\'settings\').click()" style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>';
 
-                popupBody.innerHTML = htmlContent;
+                popupBody.inner = Content;
 
             } catch (error) {
                 console.error(error);
-                popupBody.innerHTML = `<p style="color: red;">Error fetching alternative links: ${error.message}</p>`;
+                popupBody.inner = `<p style="color: red;">Error fetching alternative links: ${error.message}</p>`;
             }
         }
 
         function showDownloadMenu() {
             document.getElementById('popupTitle').textContent = "Download Options";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<button id="settings-button" onclick="promptPWAInstall()">Download App (PWA)</button><br><br><button id="settings-button" onclick="downloadEmbedHTML()">Download HTML</button><br><br><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>`;
+            popupBody.inner = `<button id="settings-button" onclick="promptPWAInstall()">Download App (PWA)</button><br><br><button id="settings-button" onclick="downloadEmbed()">Download HTML</button><br><br><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>`;
         }
 
         async function promptPWAInstall() {
@@ -1804,7 +1804,7 @@
 
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'Marty Games.html';
+                a.download = 'gn-science.html';
                 document.body.appendChild(a);
                 a.click();
 
@@ -1859,7 +1859,7 @@
         }
         listZones();
 
-        const schoolList = ["deledao", "goguardian", "lightspeed", "linewize", "securly", ".edu/"];
+        const schoolList = ["lanschool", "deledao", "goguardian", "lightspeed", "linewize", "securly", ".edu/"];
 
         function isBlockedDomain(url) {
             if (!url || typeof url !== 'string') return false;
