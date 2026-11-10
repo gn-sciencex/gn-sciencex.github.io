@@ -1,36 +1,45 @@
 {
-  "name": "gn-science",
-  "short_name": "gn-science",
-  "id": "/?utm_source=pwa",
-  "start_url": "/?utm_source=pwa",
-  "scope": "/",
-  "display": "standalone",
-  "orientation": "any",
-  "lang": "en-US",
-  "dir": "ltr",
-  "description": "GN Science — Your #1 free science learning resource.",
-  "background_color": "#0B0C10",
-  "theme_color": "#14161D",
-  "categories": [
-    "education"
-  ],
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-180.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
-  ]
+    "name": "GN Science",
+    "short_name": "GN Science",
+    "description": "GN Science — Your #1 free science learning resource.",
+    "id": "/?utm_source=pwa",
+    "start_url": "/?utm_source=pwa",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#0B0C10",
+    "theme_color": "#14161D",
+    "lang": "en-US",
+    "dir": "ltr",
+    "categories": [
+        "education",
+        "science",
+        "books"
+    ],
+    "icons": [
+        {
+            "src": "https://gn-sciencex.github.io/icon-180.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "https://gn-sciencex.github.io/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "https://gn-sciencex.github.io/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "https://gn-sciencex.github.io/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
 }
