@@ -171,21 +171,6 @@
         });
     </script>
 
-    <script>
-        (function() {
-            let originalTitle = document.title;
-
-            document.addEventListener('visibilitychange', function() {
-                if (document.hidden) {
-                    originalTitle = document.title;
-                    document.title = "New Tab";
-                } else {
-                    document.title = originalTitle;
-                }
-            });
-        })();
-    </script>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WCGV1617WM"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -994,18 +979,7 @@
                 if (themeMeta) themeMeta.setAttribute("content", "#14161d");
             }
 
-            const savedName = localStorage.getItem("cloakName");
-            if (savedName) {
-                document.title = savedName;
-            }
-
-            const savedIcon = localStorage.getItem("cloakIcon");
-            if (savedIcon) {
-                const link = document.querySelector("link[rel~='icon']") || document.createElement("link");
-                link.rel = "icon";
-                link.href = savedIcon;
-                document.head.appendChild(link);
-            }
+            if (!isRevertOnFocus()) applyCloak();
         });
 
         setTimeout(() => {
@@ -1028,7 +1002,6 @@
         let selectedCdn = null;
         let zones = [];
 
-        /* ================= Local Zone Management ================= */
         function getLocalZones() {
             try {
                 const data = localStorage.getItem('localZones');
@@ -1067,23 +1040,7 @@
             closePopup();
             document.getElementById('popupTitle').textContent = "Add Zone";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `
-                <form onsubmit="event.preventDefault(); saveLocalZone();" style="display: flex; flex-direction: column; gap: 0.2rem;">
-                    <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Zone Name</label>
-                    <input type="text" id="localZoneName" placeholder="Enter zone name..." required>
-
-                    <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">HTML File (.html)</label>
-                    <input type="file" id="localZoneHtml" accept=".html,.htm" required>
-
-                    <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Icon File (Image)</label>
-                    <input type="file" id="localZoneIcon" accept="image/*">
-
-                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                        <button type="submit" class="btn btn-primary" style="flex: 1;">Save Zone</button>
-                        <button type="button" class="btn" onclick="closePopup()" style="flex: 1;">Cancel</button>
-                    </div>
-                </form>
-            `;
+            popupBody.innerHTML = `<form onsubmit="event.preventDefault(),saveLocalZone()" style="display: flex; flex-direction: column; gap: 0.2rem;"><label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Zone Name</label> <input id="localZoneName" placeholder="Enter zone name..." required> <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">HTML File (.html)</label> <input type="file" id="localZoneHtml" accept=".html,.htm" required> <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Icon File (Image)</label> <input type="file" id="localZoneIcon" accept="image/*"><div style="display: flex; gap: 0.5rem; margin-top: 1rem;"><button class="btn btn-primary" style="flex: 1;">Save Zone</button> <button type="button" class="btn" onclick="closePopup()" style="flex: 1;">Cancel</button></div></form>`;
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
@@ -1156,7 +1113,6 @@
                 sortZones();
             }
         }
-        /* ========================================================== */
 
         function getZoneUrl(zone) {
             if (zone.url && !zone.repository) {
@@ -1677,50 +1633,146 @@
             }
         }
 
-        function cloakIcon(url) {
-            const link = document.querySelector("link[rel~='icon']");
-            link.rel = "icon";
-            if ((url + "").trim().length === 0) {
-                link.href = "favicon.ico";
-                localStorage.removeItem("cloakIcon");
-            } else {
+        const SITE_TITLE = document.title;
+        const DEFAULT_ICONS = Array.from(document.querySelectorAll("link[rel~='icon']")).map(l => ({
+            type: l.getAttribute("type"),
+            sizes: l.getAttribute("sizes"),
+            href: l.getAttribute("href")
+        }));
+        let currentIcon = "";
+
+        function setIcon(url) {
+            url = (url || "").trim();
+            if (url === currentIcon) return;
+            currentIcon = url;
+            document.querySelectorAll("link[rel~='icon']").forEach(l => l.remove());
+            if (url) {
+                const link = document.createElement("link");
+                link.rel = "icon";
                 link.href = url;
-                localStorage.setItem("cloakIcon", url);
+                document.head.appendChild(link);
+            } else {
+                DEFAULT_ICONS.forEach(icon => {
+                    const link = document.createElement("link");
+                    link.rel = "icon";
+                    if (icon.type) link.type = icon.type;
+                    if (icon.sizes) link.setAttribute("sizes", icon.sizes);
+                    link.href = icon.href;
+                    document.head.appendChild(link);
+                });
             }
-            document.head.appendChild(link);
+        }
+
+        const getCloakName = () => localStorage.getItem("cloakName") || "";
+        const getCloakIcon = () => localStorage.getItem("cloakIcon") || "";
+        const isRevertOnFocus = () => localStorage.getItem("cloakRevert") === "1";
+
+        function applyCloak() {
+            document.title = getCloakName() || SITE_TITLE;
+            setIcon(getCloakIcon());
+        }
+
+        function applyRealTab() {
+            document.title = SITE_TITLE;
+            setIcon("");
+        }
+
+        function cloakIcon(url) {
+            url = (url + "").trim();
+            if (url) localStorage.setItem("cloakIcon", url);
+            else localStorage.removeItem("cloakIcon");
+            if (!(isRevertOnFocus() && !document.hidden)) setIcon(url);
         }
 
         function cloakName(string) {
-            if ((string + "").trim().length === 0) {
-                document.title = "gn-science";
-                localStorage.removeItem("cloakName");
-                return;
+            string = (string + "").trim();
+            if (string) localStorage.setItem("cloakName", string);
+            else localStorage.removeItem("cloakName");
+            if (!(isRevertOnFocus() && !document.hidden)) document.title = string || SITE_TITLE;
+        }
+
+        function toggleCloakRevert() {
+            localStorage.setItem("cloakRevert", isRevertOnFocus() ? "0" : "1");
+            if (!document.hidden) {
+                if (isRevertOnFocus()) applyRealTab();
+                else applyCloak();
             }
-            document.title = string;
-            localStorage.setItem("cloakName", string);
+            tabCloak();
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                document.title = getCloakName() || "New Tab";
+                setIcon(getCloakIcon());
+            } else if (isRevertOnFocus()) {
+                applyRealTab();
+            } else {
+                applyCloak();
+            }
+        });
+
+        function openSettingsPopup(title, html) {
+            document.getElementById('popupTitle').textContent = title;
+            const popupBody = document.getElementById('popupBody');
+            popupBody.innerHTML = html;
+            popupBody.contentEditable = false;
+            document.getElementById('popupOverlay').style.display = "flex";
+        }
+
+        function backButton(fn, label) {
+            return `<button class="settings-button" onclick="${fn}()" style="background-color: var(--surface-alt); text-align: center; margin-top: 0.5rem;">← Back to ${label}</button>`;
+        }
+
+        function showSettingsMenu() {
+            openSettingsPopup("Settings", `
+                <button class="settings-button" onclick="themeSettings()">Theme Settings</button>
+                <button class="settings-button" onclick="tabCloak()">Tab Cloak Settings</button>
+                <button class="settings-button" onclick="linksAndDownloads()">Links and Downloads</button>
+                <button class="settings-button" onclick="openAddLocalZonePopup()">Add Local Zones</button>
+            `);
+        }
+
+        function themeSettings() {
+            openSettingsPopup("Theme Settings", `
+                <button class="settings-button" onclick="darkMode()">Toggle Dark Mode</button>
+                ${backButton("showSettingsMenu", "Settings")}
+            `);
         }
 
         function tabCloak() {
-            closePopup();
-            document.getElementById('popupTitle').textContent = "Tab Cloak";
-            const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-title-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Title</label><input type="text" id="tab-cloak-title-input" placeholder="e.g. Google, Canvas, Home" oninput="cloakName(this.value)"></div><div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;"><label for="tab-cloak-icon-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Tab Icon URL</label><input type="text" id="tab-cloak-icon-input" placeholder="e.g. https://google.com/favicon.ico" oninput="cloakIcon(this.value)"></div><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center; width: 100%; margin-top: 0.5rem;">← Back to Settings</button>`;
-            popupBody.contentEditable = false;
-            document.getElementById('popupOverlay').style.display = "flex";
+            const on = isRevertOnFocus();
+            openSettingsPopup("Tab Cloak Settings", `
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <label for="tab-cloak-title-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Page Title</label>
+                    <input type="text" id="tab-cloak-title-input" placeholder="e.g. Google, Canvas, Home" oninput="cloakName(this.value)">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <label for="tab-cloak-icon-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Icon</label>
+                    <input type="text" id="tab-cloak-icon-input" placeholder="e.g. https://google.com/favicon.ico" oninput="cloakIcon(this.value)">
+                </div>
+                <button class="settings-button" onclick="toggleCloakRevert()">Show original title when on tab: ${on ? "ON" : "OFF"}</button>
+                <p class="settings-help">When on, the tab shows its real name and icon while you're looking at it, and your cloak while you're on another tab.</p>
+                ${backButton("showSettingsMenu", "Settings")}
+            `);
+            document.getElementById('tab-cloak-title-input').value = getCloakName();
+            document.getElementById('tab-cloak-icon-input').value = getCloakIcon();
         }
 
-        const settings = document.getElementById('settings');
-        settings.addEventListener('click', () => {
-            document.getElementById('popupTitle').textContent = "Settings";
-            const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<button id="settings-button" onclick="darkMode()">Toggle Dark Mode</button><br><br><button id="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><br><br><button id="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button><br><br><button id="settings-button" onclick="loadMoreLinks()">More Links</button><br><br><button id="settings-button" onclick="openAddLocalZonePopup()">Add Local Zone</button><br><br><button id="settings-button" onclick="showDownloadMenu()">Download</button><br>`;
-            popupBody.contentEditable = false;
-            document.getElementById('popupOverlay').style.display = "flex";
-        });
+        function linksAndDownloads() {
+            openSettingsPopup("Links and Downloads", `
+                <button class="settings-button" onclick="loadMoreLinks()">Alternate Links</button>
+                <button class="settings-button" onclick="showDownloadMenu()">Download Options</button>
+                <button class="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button>
+                <button class="settings-button" onclick="openBlobNull()">Open in blob null</button>
+                ${backButton("showSettingsMenu", "Settings")}
+            `);
+        }
+
+        document.getElementById('settings').addEventListener('click', showSettingsMenu);
 
         async function loadMoreLinks() {
             closePopup();
-            document.getElementById('popupTitle').textContent = "Alternative Links";
+            document.getElementById('popupTitle').textContent = "Alternate Links";
             const popupBody = document.getElementById('popupBody');
             popupBody.innerHTML = "<p>Loading alternative domains...</p>";
             document.getElementById('popupOverlay').style.display = "flex";
@@ -1734,7 +1786,7 @@
                 const domains = data.urls;
 
                 if (!Array.isArray(domains) || domains.length === 0) {
-                    popupBody.innerHTML = "<p>No links found in domains.json.</p>";
+                    popupBody.innerHTML = "<p>No links found in domains.json.</p>" + backButton("linksAndDownloads", "Links and Downloads");
                     return;
                 }
 
@@ -1751,27 +1803,25 @@
                     } catch (e) {}
 
                     htmlContent += `
-                <a href="${url}" target="_blank" rel="noopener noreferrer" id="settings-button" style="display: block; text-decoration: none; text-align: center; line-height: 1.5;">
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="settings-button" style="display: block; text-decoration: none; text-align: center; line-height: 1.5;">
                     🌐 ${displayName}
                 </a>
             `;
                 });
                 htmlContent += '</div>';
 
-                htmlContent += '<br><button id="settings-button" onclick="document.getElementById(\'settings\').click()" style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>';
+                htmlContent += backButton("linksAndDownloads", "Links and Downloads");
 
                 popupBody.innerHTML = htmlContent;
 
             } catch (error) {
                 console.error(error);
-                popupBody.innerHTML = `<p style="color: red;">Error fetching alternative links: ${error.message}</p>`;
+                popupBody.innerHTML = `<p style="color: red;">Error fetching alternate links: ${error.message}</p>` + backButton("linksAndDownloads", "Links and Downloads");
             }
         }
 
         function showDownloadMenu() {
-            document.getElementById('popupTitle').textContent = "Download Options";
-            const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<button id="settings-button" onclick="promptPWAInstall()">Download App (PWA)</button><br><br><button id="settings-button" onclick="downloadEmbedHTML()">Download HTML</button><br><br><button id="settings-button" onclick='document.getElementById("settings").click()' style="background-color: var(--surface-alt); text-align: center;">← Back to Settings</button>`;
+            openSettingsPopup("Download Options", `<button class="settings-button" onclick="downloadEmbedHTML()">HTML</button><button class="settings-button" onclick="promptPWAInstall()">PWA</button>${backButton("linksAndDownloads", "Links and Downloads")}`);
         }
 
         async function promptPWAInstall() {
@@ -1804,7 +1854,7 @@
 
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'Marty Games.html';
+                a.download = 'gn-science.html';
                 document.body.appendChild(a);
                 a.click();
 
@@ -1852,6 +1902,21 @@
             newWindow.document.open();
             newWindow.document.write(currentHtml);
             newWindow.document.close();
+        }
+
+        function openBlobNull() {
+            const html = "<!DOCTYPE html>" + document.documentElement.outerHTML.replace(
+                /<head([^>]*)>/i,
+                (match, attrs) => `<head${attrs}><base href="${location.href}">`
+            );
+            const blobUrl = URL.createObjectURL(new Blob([html], {
+                type: "text/html;charset=utf-8"
+            }));
+            const newWindow = window.open(blobUrl, "_blank");
+            if (!newWindow) {
+                URL.revokeObjectURL(blobUrl);
+                alert("Pop-up blocked! Please allow pop-ups for this site.");
+            }
         }
 
         function closePopup() {
