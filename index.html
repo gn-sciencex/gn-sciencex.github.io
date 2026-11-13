@@ -208,6 +208,7 @@
 
     <style>
         :root {
+            --grid-line: rgba(0, 0, 0, 0.05);
             --bg-color: #f4f6f9;
             --surface-color: #ffffff;
             --surface-alt: #eef2f7;
@@ -225,6 +226,7 @@
         }
 
         .dark-mode {
+            --grid-line: rgba(255, 255, 255, 0.05);
             --bg-color: #0b0c10;
             --surface-color: #14161d;
             --surface-alt: #11131a;
@@ -253,6 +255,10 @@
 
         body {
             background-color: var(--bg-color);
+            background-image:
+                linear-gradient(var(--grid-line) 2px, transparent 2px),
+                linear-gradient(90deg, var(--grid-line) 2px, transparent 2px);
+            background-size: 75px 75px;
             color: var(--text-main);
             line-height: 1.5;
             transition: var(--transition);
@@ -694,6 +700,26 @@
             outline: none;
         }
 
+        #popupBody input[type="file"]::file-selector-button {
+            margin-right: 0.75rem;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background-color: var(--surface-color);
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .zone-form label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
         #popupBody input[type="text"]:focus,
         #popupBody input[type="file"]:focus {
             border-color: var(--primary);
@@ -739,12 +765,6 @@
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.03em;
-        }
-
-        .settings-help {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-top: -0.15rem;
         }
 
         footer {
@@ -979,7 +999,7 @@
                 if (themeMeta) themeMeta.setAttribute("content", "#14161d");
             }
 
-            if (!isRevertOnFocus()) applyCloak();
+            applyCloak();
         });
 
         setTimeout(() => {
@@ -1040,7 +1060,7 @@
             closePopup();
             document.getElementById('popupTitle').textContent = "Add Zone";
             const popupBody = document.getElementById('popupBody');
-            popupBody.innerHTML = `<form onsubmit="event.preventDefault(),saveLocalZone()" style="display: flex; flex-direction: column; gap: 0.2rem;"><label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Zone Name</label> <input id="localZoneName" placeholder="Enter zone name..." required> <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">HTML File (.html)</label> <input type="file" id="localZoneHtml" accept=".html,.htm" required> <label style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.2rem;">Icon File (Image)</label> <input type="file" id="localZoneIcon" accept="image/*"><div style="display: flex; gap: 0.5rem; margin-top: 1rem;"><button class="btn btn-primary" style="flex: 1;">Save Zone</button> <button type="button" class="btn" onclick="closePopup()" style="flex: 1;">Cancel</button></div></form>`;
+            popupBody.innerHTML = `<form class="zone-form" onsubmit="event.preventDefault(); saveLocalZone()"><label for="localZoneName">Zone Name</label><input type="text" id="localZoneName" placeholder="Enter zone name..." required><label for="localZoneHtml">HTML File (.html)</label><input type="file" id="localZoneHtml" accept=".html,.htm" required><label for="localZoneIcon">Icon File (Image)</label><input type="file" id="localZoneIcon" accept="image/*"><button type="submit" class="settings-button">Save Zone</button></form>${backButton("showSettingsMenu", "Settings")}`;
             popupBody.contentEditable = false;
             document.getElementById('popupOverlay').style.display = "flex";
         }
@@ -1665,51 +1685,25 @@
 
         const getCloakName = () => localStorage.getItem("cloakName") || "";
         const getCloakIcon = () => localStorage.getItem("cloakIcon") || "";
-        const isRevertOnFocus = () => localStorage.getItem("cloakRevert") === "1";
 
         function applyCloak() {
             document.title = getCloakName() || SITE_TITLE;
             setIcon(getCloakIcon());
         }
 
-        function applyRealTab() {
-            document.title = SITE_TITLE;
-            setIcon("");
-        }
-
         function cloakIcon(url) {
             url = (url + "").trim();
             if (url) localStorage.setItem("cloakIcon", url);
             else localStorage.removeItem("cloakIcon");
-            if (!(isRevertOnFocus() && !document.hidden)) setIcon(url);
+            setIcon(url);
         }
 
         function cloakName(string) {
             string = (string + "").trim();
             if (string) localStorage.setItem("cloakName", string);
             else localStorage.removeItem("cloakName");
-            if (!(isRevertOnFocus() && !document.hidden)) document.title = string || SITE_TITLE;
+            document.title = string || SITE_TITLE;
         }
-
-        function toggleCloakRevert() {
-            localStorage.setItem("cloakRevert", isRevertOnFocus() ? "0" : "1");
-            if (!document.hidden) {
-                if (isRevertOnFocus()) applyRealTab();
-                else applyCloak();
-            }
-            tabCloak();
-        }
-
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
-                document.title = getCloakName() || "New Tab";
-                setIcon(getCloakIcon());
-            } else if (isRevertOnFocus()) {
-                applyRealTab();
-            } else {
-                applyCloak();
-            }
-        });
 
         function openSettingsPopup(title, html) {
             document.getElementById('popupTitle').textContent = title;
@@ -1724,12 +1718,7 @@
         }
 
         function showSettingsMenu() {
-            openSettingsPopup("Settings", `
-                <button class="settings-button" onclick="themeSettings()">Theme Settings</button>
-                <button class="settings-button" onclick="tabCloak()">Tab Cloak Settings</button>
-                <button class="settings-button" onclick="linksAndDownloads()">Links and Downloads</button>
-                <button class="settings-button" onclick="openAddLocalZonePopup()">Add Local Zones</button>
-            `);
+            openSettingsPopup("Settings", `<button class="settings-button" onclick="themeSettings()">Theme Settings</button><button class="settings-button" onclick="tabCloak()">Tab Cloak Settings</button><button class="settings-button" onclick="linksAndDownloads()">Links and Downloads</button><button class="settings-button" onclick="openAddLocalZonePopup()">Add Local Zones</button>`);
         }
 
         function themeSettings() {
@@ -1740,7 +1729,6 @@
         }
 
         function tabCloak() {
-            const on = isRevertOnFocus();
             openSettingsPopup("Tab Cloak Settings", `
                 <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
                     <label for="tab-cloak-title-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Page Title</label>
@@ -1750,8 +1738,6 @@
                     <label for="tab-cloak-icon-input" style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">Set Icon</label>
                     <input type="text" id="tab-cloak-icon-input" placeholder="e.g. https://google.com/favicon.ico" oninput="cloakIcon(this.value)">
                 </div>
-                <button class="settings-button" onclick="toggleCloakRevert()">Show original title when on tab: ${on ? "ON" : "OFF"}</button>
-                <p class="settings-help">When on, the tab shows its real name and icon while you're looking at it, and your cloak while you're on another tab.</p>
                 ${backButton("showSettingsMenu", "Settings")}
             `);
             document.getElementById('tab-cloak-title-input').value = getCloakName();
@@ -1763,7 +1749,7 @@
                 <button class="settings-button" onclick="loadMoreLinks()">Alternate Links</button>
                 <button class="settings-button" onclick="showDownloadMenu()">Download Options</button>
                 <button class="settings-button" onclick="openMartyAboutBlank()">Open in about:blank</button>
-                <button class="settings-button" onclick="openBlobNull()">Open in blob null</button>
+                <button class="settings-button" onclick="openBlobNull()">Open in blob:null</button>
                 ${backButton("showSettingsMenu", "Settings")}
             `);
         }
